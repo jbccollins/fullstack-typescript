@@ -9,7 +9,11 @@ import { Usage } from './components/Usage';
 import { LazyLoadingExample } from './components/LazyLoadingExample';
 import { RouterExample } from './components/RouterExample';
 import { StyledComponentsExample } from './components/StyledComponentsExample';
+import { ReduxExample } from '@components/Examples/ReduxExample';
 import { UsersList } from './components/UsersList';
+import { hot } from 'react-hot-loader';
+import { Provider } from 'react-redux';
+import store from '@store/store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const App = () => {
+const App = () => {
   const classes = useStyles({});
 
   return (
@@ -42,9 +46,21 @@ export const App = () => {
             <Route path='/lazy-example' component={LazyLoadingExample} />
             <Route path='/styled-example' component={StyledComponentsExample} />
             <Route path='/router-example/:slug' component={RouterExample} />
+            <Route path='/redux-example' component={ReduxExample} />
           </Switch>
         </main>
       </div>
     </BrowserRouter>
   );
 };
+
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      {' '}
+      <App />
+    </Provider>
+  );
+};
+
+export default hot(module)(AppWrapper);

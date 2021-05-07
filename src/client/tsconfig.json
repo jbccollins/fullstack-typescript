@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES2019",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -13,7 +14,13 @@
     "lib": ["ES2019", "DOM"],
     "types": [],
     "jsx": "react",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@components/*": ["./components/*"],
+      "@store/*": ["./store/*"],
+      "@database/*": ["../server/database/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx"],

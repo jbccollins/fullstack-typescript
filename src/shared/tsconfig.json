@@ -5,6 +5,7 @@
     "module": "commonjs",      
     "esModuleInterop": true,
     "declaration": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,

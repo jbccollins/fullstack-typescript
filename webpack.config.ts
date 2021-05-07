@@ -25,6 +25,13 @@ const config: Configuration = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    alias: {
+      "@shared": path.resolve(__dirname, 'src/shared/'),
+      "@components": path.resolve(__dirname, 'src/client/components'),
+      "@store": path.resolve(__dirname, 'src/client/store'),
+      //"@features": path.resolve(__dirname, 'src/client/features'),
+      "@database": path.resolve(__dirname, 'src/server/database'),
+    },
   },
   optimization: {
     minimize: !IS_DEV,
@@ -58,7 +65,7 @@ const config: Configuration = {
               '@babel/proposal-numeric-separator',
               '@babel/plugin-transform-runtime',
               ['@babel/plugin-proposal-decorators', { legacy: true }],
-              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              ['@babel/plugin-proposal-class-properties', { /*loose: true*/ }],
               '@babel/plugin-proposal-object-rest-spread',
             ],
           },
@@ -104,6 +111,7 @@ const config: Configuration = {
     overlay: IS_DEV,
     open: IS_DEV,
     openPage: `http://localhost:${SERVER_PORT}`,
+    hot: IS_DEV,
   },
   plugins,
   externals: {

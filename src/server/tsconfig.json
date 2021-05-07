@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES2019",
     "sourceMap": true,
     "module": "commonjs",
@@ -16,7 +17,12 @@
     "moduleResolution": "node",
     "types": ["node"],
     "incremental": true,
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@database/*": ["database/*"],
+      "@routes/*": ["routes/*"],
+      "@shared/*": ["../shared/*"]
+    }
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.test.ts"],

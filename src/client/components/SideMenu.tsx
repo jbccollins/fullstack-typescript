@@ -6,13 +6,14 @@ import RouterIcon from '@material-ui/icons/Storage';
 import FetchIcon from '@material-ui/icons/CloudDownload';
 import StyledIcon from '@material-ui/icons/Style';
 import LazyIcon from '@material-ui/icons/SystemUpdateAlt';
+import LayersIcon from '@material-ui/icons/Layers';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 class NavLinkMui extends React.Component<any> {
   render() {
-      const { forwardedRef, to, ...props } = this.props
-      return <NavLink {...props} ref={forwardedRef} to={to} />
+    const { forwardedRef, to, ...props } = this.props;
+    return <NavLink {...props} ref={forwardedRef} to={to} />;
   }
 }
 
@@ -81,6 +82,12 @@ export const SideMenu: React.FunctionComponent = () => {
             <RouterIcon />
           </ListItemIcon>
           <ListItemText primary='React-Router' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/redux-example'>
+          <ListItemIcon>
+            <LayersIcon />
+          </ListItemIcon>
+          <ListItemText primary='Redux' />
         </ListItem>
       </List>
     </Drawer>

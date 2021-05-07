@@ -3,8 +3,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { IUserDTO } from '../../shared/IUserDTO';
-import { getUserFullName } from '../../shared/utils';
+import { IUserDTO } from '@shared/IUserDTO';
+import { getUserFullName } from '@shared/utils';
 
 interface IProps {
   user: IUserDTO;
