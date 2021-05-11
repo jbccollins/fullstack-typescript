@@ -1,8 +1,8 @@
 import bodyParser from 'body-parser';
 import { Router } from 'express';
-import { users, getUserById } from '../db';
+import { users, getUserById } from '@database/mock/db';
 
-export function apiRouter() {
+export function apiRouter(): Router {
   const router = Router();
   router.use(bodyParser.json());
 

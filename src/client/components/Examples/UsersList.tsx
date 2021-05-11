@@ -6,36 +6,35 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import React, { useEffect, useState } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import { IUserDTO } from '@shared/IUserDTO';
-import { loadUsersAPI } from '../utils/api-facade';
+import { IUserModelCreated } from '@shared/models/User';
+import { loadUsersAPI } from '@utils/api-facade';
 import { User } from './User';
 import { getUserFullName } from '@shared/utils';
 interface IUsersState {
-  users: IUserDTO[];
+  users: IUserModelCreated[];
   isLoading: boolean;
 }
 
 export const UsersList: React.FC = () => {
   const [usersState, setUsersState] = useState<IUsersState>({
     users: [],
-    isLoading: true
+    isLoading: true,
   });
-
 
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await loadUsersAPI();
       setUsersState({
         users,
-        isLoading: false
+        isLoading: false,
       });
-    }
+    };
     fetchUsers();
   }, []);
 
   const getUserById = (userId: string) => {
-    return usersState.users.find((u) => u.userId === userId);
-  }
+    return usersState.users.find((u) => u.id.toString() === userId);
+  };
 
   if (usersState.isLoading) {
     return <div>Loading...</div>;
@@ -49,8 +48,8 @@ export const UsersList: React.FC = () => {
           <CardContent>
             <List>
               {usersState.users.map((user) => (
-                <ListItem key={user.userId}>
-                  <NavLink to={`/fetch-example/${user.userId}`}>{getUserFullName(user)}</NavLink>
+                <ListItem key={user.id}>
+                  <NavLink to={`/fetch-example/${user.id}`}>{getUserFullName(user)}</NavLink>
                 </ListItem>
               ))}
             </List>

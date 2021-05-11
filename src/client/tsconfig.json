@@ -1,28 +1,23 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "target": "ES2019",
+    "composite": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["ES2019", "DOM"],
     "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "sourceMap": true,
     "noEmit": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
     "outDir": "../../dist/client",
-    "lib": ["ES2019", "DOM"],
-    "types": [],
-    "jsx": "react",
-    "composite": true,
-    "paths": {
-      "@shared/*": ["../shared/*"],
-      "@components/*": ["./components/*"],
-      "@store/*": ["./store/*"],
-      "@database/*": ["../server/database/*"]
-    }
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "ES2019",
+    "types": ["jest"]
   },
+  "extends": "./tsconfig.base.json",
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+  "oldexclude": ["**/*.test.ts", "**/*.test.tsx"],
   "references": [{ "path": "../shared" }]
 }

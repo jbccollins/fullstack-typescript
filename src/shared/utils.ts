@@ -1,3 +1,3 @@
-import { IUserDTO } from './IUserDTO';
+import { IUserPersisted } from '@shared/models/User';
 
-export const getUserFullName = (user: IUserDTO): string => `${user.firstName} ${user.lastName}`;
+export const getUserFullName = (user: IUserPersisted): string => `${user.firstName} ${user.lastName}`;

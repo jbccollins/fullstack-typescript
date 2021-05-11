@@ -29,8 +29,8 @@ const config: Configuration = {
       "@shared": path.resolve(__dirname, 'src/shared/'),
       "@components": path.resolve(__dirname, 'src/client/components'),
       "@store": path.resolve(__dirname, 'src/client/store'),
+      "@utils": path.resolve(__dirname, 'src/client/utils'),
       //"@features": path.resolve(__dirname, 'src/client/features'),
-      "@database": path.resolve(__dirname, 'src/server/database'),
     },
   },
   optimization: {

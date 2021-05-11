@@ -26,20 +26,32 @@ brew services start postgresql
 
 See the troubleshooting section if you have any issues
 
-If you are looking for a pretty way to view what's in your database my preferred free PostgreSQL GUI is [Postico](https://eggerapps.at/postico/).
-
 ---
 
 ## Features
-- [Absolute Paths](#absolute-paths)
-- [Hot Reloading](#hot-reloading)
+- [Absolute Paths](#absolute-paths) - Pretty import syntax
+- [Hot Reloading](#hot-reloading) - Immediate feedback on changes 
+- [React Router](https://reactrouter.com/) - Multi-page applications
+- [Material-UI](https://material-ui.com/) - Layout and styling
+- [Jest](https://jestjs.io/) - Testing
+- [Redux Toolkit](https://redux-toolkit.js.org/) - Application state management
+- [Axios](https://axios-http.com/) - HTTP client
+- [Express](https://expressjs.com/) - Node.js server framework
+- [React](https://reactjs.org/) - Front-end browser framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safe development
+- [PostgreSQL](https://www.postgresql.org/) - Relational database
+- [Sequelize](https://sequelize.org/) - Type safe ORM for PostgreSQL
+- [JSON Web Tokens](https://jwt.io/) - Network request security and authorization
+- [Argon2](https://en.wikipedia.org/wiki/Argon2) - Password hashing
+
+
 
 ### Absolute Paths
 
 This project is configured to allow imports using absolute paths in both the client and the server. Instead of importing `../../../../SomeComponent` we can import `@components/SomComponent`! At the moment Typescript does not support this feature out of the box for many use cases.<sup>[2]</sup> We use (slightly clunky) workarounds for this in both the client and the server but I think it's worth it in the end. You can, of course, continue to use relative imports if you so choose.
 
 #### Client:
-You must add new absolute paths to both the `paths` section in `client/tsconfig.json` and the `resolve : alias` section of `webpack.config.ts`
+You must add new absolute paths to both the `paths` section in `client/tsconfig.base.json` and the `resolve: alias` section of `webpack.config.ts`
 
 ##### Server:
 The server makes use of the [`module-alias`](https://github.com/ilearnio/module-alias) package. You must add new absolute paths to both the `paths` section in `server/tsconfig.json` and the `_moduleAliases` section in `package.json`.
@@ -77,6 +89,8 @@ psql
 ```
 again. If you enter the `psql` shell then try running `\l` and check that you see the database you just created in that list. Run `\q` to exit the shell.
 
+If you are looking for a pretty way to view what's in your database my preferred free PostgreSQL GUI is [Postico](https://eggerapps.at/postico/).
+
 Postico should connect to the database you just created with `createdb` assuming you created it using the mac account username that was shown in the error message.
 
 ---
@@ -92,22 +106,48 @@ Leaving these orphaned `.js` files in `dist` can cause issues at runtime. Typesc
 ---
 
 ## TODO:
-1. ~~Hot reload react components instead of live reloading the whole page~~
-2. Clean .d.ts files from the dist directory for src/.ts files that have been deleted
+
+- Clean .d.ts files from the dist directory for src/.ts files that have been deleted
     - Maybe fork ts-purify and let it purge based on extensions. Like purge unmatched .d.ts and .css files.
-3. Add https://github.com/shaketbaby/directory-named-webpack-plugin
-4. Ensure that the paths stuff works when importing a shared file from another shared file in the shared directory
-5. Ensure that importing .scss in a .tsx component works
-6. JWT stuff for security
-7. Database initialization for a clean environment
-8. Database import/export
-9. Publish to heroku
-10. Redux and redux dev tools
-11. Add a linter
-12. Unit and integration tests for both client and server with mock DB or real clean db
-13. Setup bash script to install dependencies and configure project options like db or no db?
-14. Proper logging for DB and Server stuff
-15. Add sass support
-16. Graphql?
-17. Add linting for server, client and shared. Enforce common standards, that are opt in of course
-18. Pull route strings out into constants
+- Add https://github.com/shaketbaby/directory-named-webpack-plugin
+- Ensure that the paths stuff works when importing a shared file from another shared file in the shared directory
+- Ensure that importing .scss in a .tsx component works
+- JWT stuff for security
+- Database initialization for a clean environment
+- Database import/export
+- Publish to heroku
+- Redux and redux dev tools
+- Unit and integration tests for both client and server with mock DB or real clean db
+- Setup bash script to install dependencies and configure project options like db or no db?
+- Proper logging for DB and Server stuff
+    - Including orm generated sql queries
+- Add sass support
+- Graphql?
+- Pull route strings out into constants
+- Fix relative import in User.test.tsx. See exclude in client/tsconfig.json and tsconfig-for-tests.json
+    - Make `npm run test` work with absolute paths
+- Figure out postgresql table and column naming conventions table_name vs TableName vs tableName
+- Add linter to production build step. Fail the build if the linter throws.
+- Reorganize db.ts and db.test.ts. Put them in the database directory
+- Use .env file for DB credentials
+- bodyParser is deprecated
+- Figure out how to create, run and manage migrations
+ - Sync db is not quite enough
+- Add Google Analytics
+- Add Log In with Google
+- Add deploy to heroku: Lint => Test => Build => Publish
+- Switch user createdAt and updatedAt from Date to DateTime
+- Add a way to rollback heroku to a specific commit or and the last deployed commit
+    - Maybe even add a deploy log dashboard where this can be done visually?
+- Constant strings
+ - UNDEFINED = 'undefined' (used in resolvers/user.ts)
+ - Add a cli script in package.json that will automatically add absolute paths for you for both the server and the client
+    - yarn run create-abs-path --server --client @database database/*
+- Move graphql stuff to it's own directory
+    - Audit the absolute import situation for this stuff
+- Ensure that type-orm and sequelize can create timestampz Date() types for createdAt and updatedAt
+- Make the db sync alter flag configurable
+ - Add a package.json script to force a sync
+- Audit the mikroorm naming strategy. It may be easy to use column_name in postgres and columnName in ts
+- ~~Hot reload react components instead of live reloading the whole page~~
+- ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~

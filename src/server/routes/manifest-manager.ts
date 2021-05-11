@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { IS_DEV, WEBPACK_PORT } from '../config';
+import { IS_DEV, WEBPACK_PORT } from '@server/config';
 
 function getManifestFromWebpack(): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -14,7 +14,7 @@ function getManifestFromWebpack(): Promise<any> {
 
 let manifestStrCache: any;
 
-export async function getManifest() {
+export async function getManifest(): Promise<any> {
   let manifestStr: string;
   if (IS_DEV) {
     // load from webpack dev server

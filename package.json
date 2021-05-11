@@ -45,6 +45,9 @@
     "roots": [
       "<rootDir>/src"
     ],
+    "moduleNameMapper": {
+      "@shared/(.*)": "<rootDir>/src/shared/$1"
+    },
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
@@ -72,18 +75,24 @@
   "_moduleAliases": {
     "@database": "dist/server/database",
     "@routes": "dist/server/routes",
-    "@shared": "dist/shared"
+    "@shared": "dist/shared",
+    "@server": "dist/server"
   },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
+    "@mikro-orm/core": "^4.5.4",
+    "@mikro-orm/postgresql": "^4.5.4",
     "@reduxjs/toolkit": "^1.5.1",
     "@webpack-cli/serve": "^1.2.2",
+    "apollo-server-express": "^2.24.0",
+    "argon2": "^0.27.2",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "find-up": "^5.0.0",
+    "graphql": "^15.5.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "react-redux": "^7.2.4",
@@ -92,7 +101,8 @@
     "sequelize": "^6.6.2",
     "sequelize-typescript": "2.1.0",
     "styled-components": "^5.2.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -108,7 +118,7 @@
     "@types/cssnano": "^4.0.0",
     "@types/enzyme": "^3.10.8",
     "@types/express": "^4.17.11",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^26.0.23",
     "@types/module-alias": "^2.0.0",
     "@types/node": "^14.14.22",
     "@types/pg": "^7.14.11",
@@ -127,6 +137,8 @@
     "@typescript-eslint/parser": "^4.14.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "babel-loader": "^8.2.2",
+    "chalk": "^4.1.1",
+    "class-validator": "^0.13.1",
     "concurrently": "^5.3.0",
     "core-js": "^3.8.3",
     "cross-env": "^7.0.3",
@@ -153,6 +165,7 @@
     "redux-devtools": "^3.7.0",
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
+    "sequelize-cli": "^6.2.0",
     "style-loader": "^2.0.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",

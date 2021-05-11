@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { IUserDTO } from '../../shared/IUserDTO';
+import { IUserPersisted } from '@shared/models/User';
 
-export function loadUsersAPI() {
-  return axios.get(`/api/users`).then((res) => res.data as IUserDTO[]);
+export async function loadUsersAPI(): Promise<IUserPersisted[]> {
+  const res = await axios.get(`/api/users`);
+  return res.data as IUserPersisted[];
 }

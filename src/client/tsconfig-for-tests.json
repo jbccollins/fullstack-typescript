@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "lib": ["es6", "dom"],
     "jsx": "react",
-    "types": ["node", "jest"],
-    "noEmit": true
-  }
+    "lib": ["es6", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "target": "es6",
+    "types": ["node", "jest"]
+  },
+  "extends": "./tsconfig.base.json"
 }

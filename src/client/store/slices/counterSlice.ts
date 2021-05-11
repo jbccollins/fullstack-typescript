@@ -76,6 +76,6 @@ export const counterSlice = createSlice({
 // Slice action creators
 export const { increment, decrement, incrementByAmount, reset } = counterSlice.actions;
 
-export const selectCounter = (state: RootState) => state.counter;
+export const selectCounter = (state: RootState): CounterState => state.counter;
 
 export default counterSlice.reducer;

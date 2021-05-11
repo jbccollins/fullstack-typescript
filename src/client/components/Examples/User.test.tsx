@@ -3,15 +3,17 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import { createShallow } from '@material-ui/core/test-utils';
 import React from 'react';
-import { IUserDTO } from '../../shared/IUserDTO';
+import { IUserModelCreated } from '@shared/models/User';
 import { User } from './User';
 
 describe('<User/>', () => {
-  const user: IUserDTO = {
-    userId: '123',
+  const user: IUserModelCreated = {
+    id: 123,
     firstName: 'Gil',
     lastName: 'Amran',
-    imageUrl: '/statics/gil.jpg',
+    email: 'GilAmran@gmail.com',
+    createdAt: new Date(),
+    updatedAt: new Date()
   };
   const MUIShallow = createShallow();
 
@@ -37,10 +39,10 @@ describe('<User/>', () => {
     expect(content.text()).toEqual('Id: 123');
   });
 
-  it('should display user image in the 2nd Typography', () => {
+  it('should display user email in the 2nd Typography', () => {
     const wrapper = MUIShallow(<User user={user} />);
-    const userImageComp = wrapper.find(Typography).at(1);
-    const content = userImageComp.dive().dive();
-    expect(content.text()).toEqual('Image Url: /statics/gil.jpg');
+    const userEmailComp = wrapper.find(Typography).at(1);
+    const content = userEmailComp.dive().dive();
+    expect(content.text()).toEqual('Email: GilAmran@gmail.com');
   });
 });
