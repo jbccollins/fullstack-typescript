@@ -1,0 +1,13 @@
+{
+  "description": "This file only exists to satisfy the mikro-orm cli which requires a tsconfig.json and package.json to exist in the same directory unfortunately ",
+  "extends": "./src/server/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@database/*": ["./src/server/database/*"],
+      "@routes/*": ["./src/server/routes/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@server/*": ["./src/server/*"]
+    }
+  }
+}

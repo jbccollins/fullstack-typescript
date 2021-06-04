@@ -14,6 +14,7 @@ import { UsersList } from '@components/Examples/UsersList';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import store from '@store/store';
+import { GraphQLExample } from '@components/Examples/GraphQLExample';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ const App = () => {
             <Route path='/styled-example' component={StyledComponentsExample} />
             <Route path='/router-example/:slug' component={RouterExample} />
             <Route path='/redux-example' component={ReduxExample} />
+            <Route path='/graphql-example' component={GraphQLExample} />
           </Switch>
         </main>
       </div>

@@ -1,10 +1,14 @@
 /*
 A simple CRUD interface for Users that integrates sequelize, postgresql and typescript.
 */
-import { Arg, Ctx, Field, InputType, Int, Mutation, ObjectType, Query, Resolver } from 'type-graphql';
-import { User } from '@database/models/User';
+import { Arg, Authorized, Ctx, Field, InputType, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { User } from '@database/entities/User';
 import { MyContext } from './types';
 import argon2 from 'argon2';
+import { IUserEntity } from '@database/entities/IUserEntity';
+import { CustomEntityManager } from '@database/helpers/CustomEntityManager';
+import { isAuth } from '@server/auth/authChecker';
+import { logger } from '@server/middleware/logger';
 
 @InputType()
 class EmailPasswordInput {
@@ -18,9 +22,8 @@ class EmailPasswordInput {
 class FieldError {
   @Field()
   field: string;
-
   @Field()
-  message: String;
+  message: string;
 }
 
 @ObjectType()
@@ -33,6 +36,15 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { orm, req }: MyContext): Promise<User> {
+    // you are not logged in
+    if (!req.session.userId) {
+      return null;
+    }
+    return await orm.em.findOne(User, { id: req.session.userId });
+  }
+
   // Example Query:
   // users {
   //   id,
@@ -41,7 +53,7 @@ export class UserResolver {
   // }
   @Query(() => [User])
   users(@Ctx() ctx: MyContext): Promise<User[]> {
-    return User.findAll();
+    return ctx.orm.em.find(User, {});
   }
 
   // Example Query:
@@ -51,7 +63,8 @@ export class UserResolver {
   // }
   @Query(() => User, { nullable: true })
   user(@Arg('id', () => Int) id: number, @Ctx() ctx: MyContext): Promise<User | null> {
-    return User.findOne({ where: { id: id } });
+    //return User.findOne({ where: { id: id } });
+    return ctx.orm.em.findOne(User, { id: id });
   }
   /*
     Example Query:
@@ -67,23 +80,73 @@ export class UserResolver {
       }
     }
   */
-  @Mutation(() => User)
+  @Mutation(() => UserResponse)
   async registerUser(
     @Arg('firstName', () => String) firstName: string,
     @Arg('lastName', () => String) lastName: string,
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
-    @Ctx() ctx: MyContext,
-  ): Promise<User> {
+    @Ctx() { req }: MyContext,
+  ): Promise<UserResponse> {
+    const errors: FieldError[] = [];
+    if (firstName.length === 0) {
+      errors.push({
+        field: 'firstName',
+        message: 'firstName field is required'
+      })
+    }
+    if (lastName.length === 0) {
+      errors.push({
+        field: 'lastName',
+        message: 'lastName field is required'
+      })
+    }
+    if (email.length === 0) {
+      errors.push({
+        field: 'email',
+        message: 'email field is required'
+      })
+    }
+    if (password.length === 0) {
+      errors.push({
+        field: 'password',
+        message: 'password field is required'
+      })
+    }
+    if (errors.length > 0) {
+      return { errors };
+    }
     const pwdHash = await argon2.hash(password);
-    const user = new User({
+    const userEntity: IUserEntity = {
       firstName,
       lastName,
       email,
       pwdHash,
-    });
-    await user.save();
-    return user;
+    };
+    let user: User = null;
+    try {
+      // TODO: Do this try catch check with native sql with ON CONFLICT and RETURNING id
+      user = await CustomEntityManager.createAndSave(User, userEntity);
+    } catch(e) {
+      if (e.name === 'UniqueConstraintViolationException') {
+        errors.push({
+          field: 'email',
+          message: 'A user with this email already exists.'
+        })
+        
+      } else {
+        errors.push({
+          field: 'email',
+          message: 'Failed to create user. Code: ' + e.code 
+        })
+      }
+      return { errors };
+    }
+
+    // Store user id session. set a cookie on the user to keep them logged in
+    req.session.userId = user.id;
+
+    return { user };
   }
 
 
@@ -104,12 +167,13 @@ export class UserResolver {
     }
   }
   */
+
   @Mutation(() => UserResponse)
   async loginUser(
     @Arg("options", () => EmailPasswordInput) options: EmailPasswordInput,
-    @Ctx() ctx: MyContext,
+    @Ctx() { orm, req }: MyContext,
   ): Promise<UserResponse> {
-    const user = await User.findOne({ where: { email : options.email }});
+    const user = await orm.em.findOne(User, { email: options.email });
     if (!user) {
       return  {
         errors: [{field: 'email', message: 'A user with that email does not exist'}]
@@ -121,11 +185,27 @@ export class UserResolver {
         errors: [{field: 'password', message: 'Incorrect password'}]
       }
     }
+
+    req.session.userId = user.id;
+
     return {
       user
     };
   }
 
+  //@Authorized()
+  @UseMiddleware(isAuth, logger)
+  @Mutation(() => UserResponse)
+  async logoutUser(
+    @Ctx() { orm, req }: MyContext,
+  ): Promise<UserResponse> {
+
+    req.session.userId = null;
+    
+    return {
+      user: null
+    };
+  }
 
   //Example Query
   // mutation {
@@ -147,7 +227,7 @@ export class UserResolver {
     @Arg('pwdHash', () => String, { nullable : true }) pwdHash: string,
     @Ctx() ctx: MyContext,
   ): Promise<User | null> {
-    const user: User = await User.findOne({where: { id: id }});
+    const user: User = await ctx.orm.em.findOne(User, { id: id });
     if (user === null) {
       // TODO: Log this exception in a sensible way and update the return type(s)
       // reflect that this exception can be gracefully caught. Something like <User | null>
@@ -166,29 +246,30 @@ export class UserResolver {
     if (typeof pwdHash !== 'undefined') {
       user.pwdHash = pwdHash;
     }
-    await user.save();
+    await ctx.orm.em.persistAndFlush(user);
     return user;
   }
 
   // Example Query
   // mutation {
-  //   deletePost(
+  //   deleteUser (
   //     id: 40,
   //   )
   // }
+  @UseMiddleware(logger)
   @Mutation(() => Boolean)
-  async deletePost(
+  async deleteUser(
     @Arg('id', () => Int) id: number,
     @Ctx() ctx: MyContext,
   ): Promise<Boolean> {
-    const user: User = await User.findOne({where: { id: id }});
+    const user: User = await ctx.orm.em.findOne(User, { id: id });
     if (user === null) {
       // TODO: Log this exception in a sensible way and update the return type(s)
       // reflect that this exception can be gracefully caught. Something like <Boolean | null>
       console.error(`User with ID ${id} does not exist.`)
       return false;
     }
-    user.destroy();
+    ctx.orm.em.removeAndFlush(user);
     return true;
   }
 

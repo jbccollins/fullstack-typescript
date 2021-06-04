@@ -1,4 +1,4 @@
-import IPersistantObject from '@shared/models/IPersistantObject';
+import IPersistentObject from '@shared/models/IPersistentObject';
 import IPersistedObject from '@shared/models/IPersistedObject';
 export interface IUser {
   firstName: string;
@@ -6,6 +6,6 @@ export interface IUser {
   email: string;
 }
 
-export interface IUserPersistant extends IUser, IPersistantObject {}
+export interface IUserPersistent extends IUser, IPersistentObject {}
 
 export interface IUserPersisted extends IUser, IPersistedObject {}

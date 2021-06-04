@@ -1,5 +1,5 @@
-import { IUserPersistant } from "@shared/models/User";
+import { IUserPersistent } from "@shared/models/User";
 
-export interface IUserEntity extends IUserPersistant {
+export interface IUserEntity extends IUserPersistent {
   pwdHash: string;
 }

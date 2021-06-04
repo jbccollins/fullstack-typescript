@@ -7,8 +7,9 @@ import FetchIcon from '@material-ui/icons/CloudDownload';
 import StyledIcon from '@material-ui/icons/Style';
 import LazyIcon from '@material-ui/icons/SystemUpdateAlt';
 import LayersIcon from '@material-ui/icons/Layers';
+import GraphqlIcon from '@material-ui/icons/Grain';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 class NavLinkMui extends React.Component<any> {
   render() {
@@ -88,6 +89,12 @@ export const SideMenu: React.FunctionComponent = () => {
             <LayersIcon />
           </ListItemIcon>
           <ListItemText primary='Redux' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/graphql-example'>
+          <ListItemIcon>
+            <GraphqlIcon />
+          </ListItemIcon>
+          <ListItemText primary='GraphQL' />
         </ListItem>
       </List>
     </Drawer>

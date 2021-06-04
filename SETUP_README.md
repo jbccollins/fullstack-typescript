@@ -149,5 +149,26 @@ Leaving these orphaned `.js` files in `dist` can cause issues at runtime. Typesc
 - Make the db sync alter flag configurable
  - Add a package.json script to force a sync
 - Audit the mikroorm naming strategy. It may be easy to use column_name in postgres and columnName in ts
+- Audit the mikroorm migration config: https://mikro-orm.io/docs/migrations/#configuration
+- See if it's possible to set the baseUrl to './src/server' for the root level mikro orm tsconfig to avoid having to 
+duplicate the paths there
+    - Add the paths documentation for this config if this can't be solved :/
+- Move to the latest Node version
+- Storybook?
+- Add brew install redis to the setup
+ - Add redis as a marquee feature to the main readme
+- Move to yarn from npm
+- SASS global themeing?
+ - What is tailwind css?
+- Figma frame? https://www.youtube.com/watch?v=1PBNAoKd-70
+- Add port conflict resolution from old starter kit
+- Ensure that whoever clones this repo knows to copy/pase the graphql-settings.json content into the graphql playground settings tab
+ - Or figure out a way to set those settings programatically
+- Flesh out authorization for graphql endpoints
+    - Add roles like admin and owner
+    - Add the ability for an admin/owner to impersonate users with lower roles
+- Add websocket support and examples (https://www.npmjs.com/package/graphql-ws)
+- ~~See if generics can be used in BaseEntity to allow for extensions like User to have static ORM functions like User.Create()~~
+    - I don't think this is a good idea actually. A factory is probably better.
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
