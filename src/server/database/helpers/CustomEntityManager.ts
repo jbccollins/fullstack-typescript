@@ -1,14 +1,26 @@
-import { MikroORM, IDatabaseDriver, Connection, Entity, EntityName, EntityData, AnyEntity, Populate } from "@mikro-orm/core";
+import {
+  MikroORM,
+  IDatabaseDriver,
+  Connection,
+  Entity,
+  EntityName,
+  EntityData,
+  AnyEntity,
+  Populate,
+} from '@mikro-orm/core';
 import { ORM } from '@database/orm/ORM';
-
 
 export class CustomEntityManager {
   /*
     create, persiste and flush all in the same async function.
   */
-  static async createAndSave<T extends AnyEntity<T>, P extends Populate<T> = any>(entityName: EntityName<T>, data: EntityData<T>, options?: {
-    managed?: boolean;
-  }): Promise<T> {
+  static async createAndSave<T extends AnyEntity<T>, P extends Populate<T> = any>(
+    entityName: EntityName<T>,
+    data: EntityData<T>,
+    options?: {
+      managed?: boolean;
+    },
+  ): Promise<T> {
     /****** Kinda bad hacky stuff *****/
     /*
       Given this situation:
@@ -28,7 +40,6 @@ export class CustomEntityManager {
       const user = userEntity as User;
     */
 
-    
     /***** Alternative *****/
     // To avoid all that we do the create, persist and flush all at once in the same function.
     // const user: User = await CustomEntityManager.createAndSave(User, userEntityData);
@@ -36,5 +47,5 @@ export class CustomEntityManager {
     const entity = orm.em.create(entityName, data, options);
     await orm.em.persistAndFlush(entity);
     return entity;
-  };
+  }
 }

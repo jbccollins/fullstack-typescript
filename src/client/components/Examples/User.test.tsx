@@ -13,7 +13,7 @@ describe('<User/>', () => {
     lastName: 'Amran',
     email: 'GilAmran@gmail.com',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   };
   const MUIShallow = createShallow();
 

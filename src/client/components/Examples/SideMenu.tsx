@@ -1,4 +1,4 @@
-import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles, ListItemProps, ExtendButtonBase, ListItemTypeMap, SvgIconTypeMap } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import UsageIcon from '@material-ui/icons/Code';
 import HomeIcon from '@material-ui/icons/Home';
@@ -8,8 +8,11 @@ import StyledIcon from '@material-ui/icons/Style';
 import LazyIcon from '@material-ui/icons/SystemUpdateAlt';
 import LayersIcon from '@material-ui/icons/Layers';
 import GraphqlIcon from '@material-ui/icons/Grain';
+import LockIcon from '@material-ui/icons/Lock';
+import PersonIcon from '@material-ui/icons/Person';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
 class NavLinkMui extends React.Component<any> {
   render() {
@@ -95,6 +98,18 @@ export const SideMenu: React.FunctionComponent = () => {
             <GraphqlIcon />
           </ListItemIcon>
           <ListItemText primary='GraphQL' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/register'>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary='Register' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/login'>
+          <ListItemIcon>
+            <LockIcon />
+          </ListItemIcon>
+          <ListItemText primary='Log in' />
         </ListItem>
       </List>
     </Drawer>

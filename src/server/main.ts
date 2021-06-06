@@ -18,13 +18,15 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { MyContext } from '@server/resolvers/types';
 import { authChecker } from '@server/auth/authChecker';
+import cors from 'cors';
+
 const main = async (): Promise<void> => {
   try {
     console.log(`*******************************************`);
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`config: ${JSON.stringify(config, null, 2)}`);
     console.log(`*******************************************`);
-    
+
     const orm = await ORM.getInstance();
     // Automatically run migrations:
     orm.getMigrator().up();
@@ -36,49 +38,51 @@ const main = async (): Promise<void> => {
       res.send('hello');
     });
 
+    // Globally apply cors to all routes:
+    app.use(cors({
+      origin: "http://localhost:3000",
+      credentials: true
+    }));
+
     const RedisStore = connectRedis(session);
-    const redisClient = redis.createClient()
+    const redisClient = redis.createClient();
     app.use(
       session({
         name: 'qid',
         store: new RedisStore({
           client: redisClient,
           // Don't refresh the user session in dev
-          disableTouch: config.IS_DEV
+          disableTouch: config.IS_DEV,
         }),
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
           sameSite: 'lax',
-          secure: !config.IS_DEV // cookie only works in https
+          secure: !config.IS_DEV, // cookie only works in https
         },
         saveUninitialized: false,
         secret: process.env.REDIS_SECRET,
         resave: false,
-      })
-    )
+      }),
+    );
 
     const apolloServer = new ApolloServer({
       schema: await buildSchema({
-        resolvers: [
-          HelloResolver,
-          UserResolver
-        ],
+        resolvers: [HelloResolver, UserResolver],
         validate: false, //TODO: Should this be false?
         authChecker,
       }),
-      context: ({req, res}): MyContext => ({ orm, req, res }),
+      context: ({ req, res }): MyContext => ({ orm, req, res }),
     });
 
     // Create graphql endpoint http://localhost:3000/graphql
-    apolloServer.applyMiddleware({ app });
+    apolloServer.applyMiddleware({ app, cors: false });
 
-    app.use
+    app.use;
     app.use('/assets', express.static(path.join(process.cwd(), 'assets')));
     app.use(apiRouter());
     app.use(staticsRouter());
     app.use(pagesRouter());
-
 
     app.listen(config.SERVER_PORT, () => {
       console.log(`App listening on port ${config.SERVER_PORT}!`);

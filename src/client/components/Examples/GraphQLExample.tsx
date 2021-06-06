@@ -15,9 +15,11 @@ export const GraphQLExample: React.FunctionComponent = () => {
       <CardHeader title='GraphQL Example' />
       <CardContent>
         <Typography>
-          <a href="/graphql" target="_blank">Here is the direct link to the GraphQL Playground</a>
+          <a href='/graphql' target='_blank'>
+            Here is the direct link to the GraphQL Playground
+          </a>
         </Typography>
-        <iframe src="/graphql" height="500" width="100%"></iframe> 
+        <iframe src='/graphql' height='500' width='100%'></iframe>
       </CardContent>
     </Card>
   );

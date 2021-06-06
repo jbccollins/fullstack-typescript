@@ -3,7 +3,8 @@
 */
 //import IPersistentObject from '@shared/models/IPersistentObject';
 
-export default interface IPersistedObject {//extends Omit<IPersistentObject, 'id' | 'createdAt' | 'updatedAt'> {
+export default interface IPersistedObject {
+  //extends Omit<IPersistentObject, 'id' | 'createdAt' | 'updatedAt'> {
   id: number;
   createdAt: Date;
   updatedAt: Date;

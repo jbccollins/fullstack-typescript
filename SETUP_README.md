@@ -157,6 +157,7 @@ duplicate the paths there
 - Storybook?
 - Add brew install redis to the setup
  - Add redis as a marquee feature to the main readme
+ - add `redis-server` to the run script. kill on quit if possible.
 - Move to yarn from npm
 - SASS global themeing?
  - What is tailwind css?
@@ -168,6 +169,8 @@ duplicate the paths there
     - Add roles like admin and owner
     - Add the ability for an admin/owner to impersonate users with lower roles
 - Add websocket support and examples (https://www.npmjs.com/package/graphql-ws)
+- Add documentation about formik and yup. See Register.tsx
+- Document the usage of the gen script for graphql
 - ~~See if generics can be used in BaseEntity to allow for extensions like User to have static ORM functions like User.Create()~~
     - I don't think this is a good idea actually. A factory is probably better.
 - ~~Hot reload react components instead of live reloading the whole page~~

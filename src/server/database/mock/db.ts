@@ -7,7 +7,7 @@ export const users: IUserPersisted[] = [
     firstName: 'Gil',
     lastName: 'Amran',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const users: IUserPersisted[] = [
     firstName: 'Noa',
     lastName: 'Tevel',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 3,
@@ -23,7 +23,7 @@ export const users: IUserPersisted[] = [
     firstName: 'John',
     lastName: 'Doe',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
 ];
 

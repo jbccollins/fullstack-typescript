@@ -30,6 +30,7 @@ const config: Configuration = {
       "@components": path.resolve(__dirname, 'src/client/components'),
       "@store": path.resolve(__dirname, 'src/client/store'),
       "@utils": path.resolve(__dirname, 'src/client/utils'),
+      "@client": path.resolve(__dirname, 'src/client'),
       //"@features": path.resolve(__dirname, 'src/client/features'),
     },
   },

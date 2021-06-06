@@ -1,8 +1,8 @@
-import { User } from "@database/entities/User";
-import { EntityCaseNamingStrategy } from "@mikro-orm/core";
-import { IS_DEV } from "@server/config";
+import { User } from '@database/entities/User';
+import { EntityCaseNamingStrategy } from '@mikro-orm/core';
+import { IS_DEV } from '@server/config';
 import { MikroORM } from '@mikro-orm/core';
-import path from "path";
+import path from 'path';
 
 export default {
   // ./dist/server/database/entities
@@ -16,7 +16,7 @@ export default {
   // Keep the case of things as they are defined in ts land
   namingStrategy: EntityCaseNamingStrategy,
   migrations: {
-    path: path.join(__dirname, "./migrations"),
-    pattern: /^[\w-]+\d+\.[tj]s$/
-  }
+    path: path.join(__dirname, './migrations'),
+    pattern: /^[\w-]+\d+\.[tj]s$/,
+  },
 } as Parameters<typeof MikroORM.init>[0];
