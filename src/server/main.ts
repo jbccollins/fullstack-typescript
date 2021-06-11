@@ -19,6 +19,7 @@ import connectRedis from 'connect-redis';
 import { MyContext } from '@server/resolvers/types';
 import { authChecker } from '@server/auth/authChecker';
 import cors from 'cors';
+import { SESSION_COOKIE_NAME } from '@server/config';
 
 const main = async (): Promise<void> => {
   try {
@@ -48,7 +49,7 @@ const main = async (): Promise<void> => {
     const redisClient = redis.createClient();
     app.use(
       session({
-        name: 'qid',
+        name: SESSION_COOKIE_NAME,
         store: new RedisStore({
           client: redisClient,
           // Don't refresh the user session in dev

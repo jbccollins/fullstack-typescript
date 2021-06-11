@@ -1,32 +1,29 @@
-import { CssBaseline, makeStyles } from '@material-ui/core';
-import { createMuiTheme, createStyles, responsiveFontSizes, Theme, ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
+import { GraphQLExample } from '@components/Examples/GraphQLExample';
 import { Header } from '@components/Examples/Header';
-import { SideMenu } from '@components/Examples/SideMenu';
 import { Home } from '@components/Examples/Home';
-import { Usage } from '@components/Examples/Usage';
 import { LazyLoadingExample } from '@components/Examples/LazyLoadingExample';
-import { RouterExample } from '@components/Examples/RouterExample';
-import { StyledComponentsExample } from '@components/Examples/StyledComponentsExample';
 import { ReduxExample } from '@components/Examples/ReduxExample';
+import { RouterExample } from '@components/Examples/RouterExample';
+import { SideMenu } from '@components/Examples/SideMenu';
+import { StyledComponentsExample } from '@components/Examples/StyledComponentsExample';
+import { Usage } from '@components/Examples/Usage';
 import { UsersList } from '@components/Examples/UsersList';
+import { UsersList as UsersListPage} from '@components/pages/UsersList';
+import { Register } from '@components/pages/Register';
+import { CssBaseline, makeStyles } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
+import purple from '@material-ui/core/colors/purple';
+import { createMuiTheme, createStyles, responsiveFontSizes, Theme, ThemeProvider } from '@material-ui/core/styles';
+import store from '@store/store';
+import { createUrqlClient } from '@utils/createUrqlClient';
+import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider as ReduxProvider } from 'react-redux';
-import { Provider as UrqlProvider, createClient } from 'urql';
-import store from '@store/store';
-import { GraphQLExample } from '@components/Examples/GraphQLExample';
-import { Register } from '@components/pages/Register';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
+import { Provider as UrqlProvider } from 'urql';
 import { Login } from './components/pages/Login';
 
-const client = createClient({
-  url: 'http://localhost:3000/graphql',
-  fetchOptions: {
-    credentials: 'include'
-  }
-});
+const client = createUrqlClient();
 
 const theme = responsiveFontSizes(
   createMuiTheme({
@@ -77,6 +74,7 @@ const App = () => {
             <Route path='/graphql-example' component={GraphQLExample} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
+            <Route path='/users' component={UsersListPage} />
           </Switch>
         </main>
       </div>

@@ -16,7 +16,7 @@ import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { useMutation } from 'urql';
 import { useRegisterMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -60,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const validationSchema = yup.object({
-  email: yup.string().email('Enter a valid email').required('Email is required'),
+  firstName: yup.string().required('First Name is required'),
+  lastName: yup.string().required('Last Name is required'),
+  email: yup.string().email('Enter a valid email').required('Email Address is required'),
   password: yup.string().min(8, 'Password should be of minimum 8 characters length').required('Password is required'),
 });
 
@@ -74,10 +76,10 @@ const Register: React.FC<registerProps> = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: 'aaaafdsdfs',
-      lastName: 'sdfasdfasdf',
-      email: 'asdfasdfasdf@asdfasdf.c',
-      password: 'lkajshdfkljasdf',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setErrors }) => {
@@ -109,7 +111,7 @@ const Register: React.FC<registerProps> = () => {
                 autoComplete='fname'
                 name='firstName'
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 id='firstName'
                 label='First Name'
@@ -123,7 +125,7 @@ const Register: React.FC<registerProps> = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 id='lastName'
                 label='Last Name'
@@ -138,7 +140,7 @@ const Register: React.FC<registerProps> = () => {
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 id='email'
                 label='Email Address'
@@ -153,7 +155,7 @@ const Register: React.FC<registerProps> = () => {
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 name='password'
                 label='Password'
@@ -172,7 +174,7 @@ const Register: React.FC<registerProps> = () => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link component={RouterLink} to="/login">
                 Already have an account? Log in
               </Link>
             </Grid>

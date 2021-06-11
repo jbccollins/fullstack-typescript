@@ -1,5 +1,5 @@
 /*
-A simple CRUD interface for Users that integrates sequelize, postgresql and typescript.
+A simple CRUD interface for Users that integrates mikroorm, type-grahql, postgresql and typescript.
 */
 import {
   Arg,
@@ -23,6 +23,8 @@ import { isAuth } from '@server/auth/authChecker';
 import { logger } from '@server/middleware/logger';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { formatWithOptions } from 'util';
+import { SESSION_COOKIE_NAME } from '@server/config';
+import sleep from '@shared/utils/sleep';
 
 @InputType()
 class EmailPasswordInput {
@@ -66,7 +68,8 @@ export class UserResolver {
   //   lastName,
   // }
   @Query(() => [User])
-  users(@Ctx() ctx: MyContext): Promise<User[]> {
+  async users(@Ctx() ctx: MyContext): Promise<User[]> {
+    await sleep(2000);
     return ctx.orm.em.find(User, {});
   }
 
@@ -217,15 +220,30 @@ export class UserResolver {
     };
   }
 
+  /*
+  Example Query
+  mutation {
+    logoutUser
+  }
+  */
   //@Authorized()
   @UseMiddleware(isAuth, logger)
-  @Mutation(() => UserResponse)
-  async logoutUser(@Ctx() { orm, req }: MyContext): Promise<UserResponse> {
-    req.session.userId = null;
+  @Mutation(() => Boolean)
+  async logoutUser(@Ctx() { req, res }: MyContext): Promise<Boolean> {
+    
+    return new Promise(resolve => req.session.destroy(err => {
+      if(err) {
+        // TODO: Add actual logging here
+        console.log(err);
+        resolve(false);
+        return;
+      }
+      // TODO: Pull the 'qid' variable out into a constants file
+      res.clearCookie(SESSION_COOKIE_NAME);
+      resolve(true);
+    }));
 
-    return {
-      user: null,
-    };
+    return true;
   }
 
   //Example Query

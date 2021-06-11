@@ -168,10 +168,30 @@ duplicate the paths there
 - Flesh out authorization for graphql endpoints
     - Add roles like admin and owner
     - Add the ability for an admin/owner to impersonate users with lower roles
+    - Protect destructive actions for admin roles
+    - Allow admins to create users with a temp password that requires them to reset it on first log in
+    - Add a way for admins to invalidate passwords in general
+    - Add a way for admins to "delete" users using a "deleted" column
+    - Make user first and last names private. When users are deleted have the getFullName field return "[deleted]"
+    - Allow users to share their name or just their username
+    - Add a timeout to a user session. Log them out after a period of inactivity.
+- Protect from graphql spam (see the ben awad graphql playlist on cost)
 - Add websocket support and examples (https://www.npmjs.com/package/graphql-ws)
 - Add documentation about formik and yup. See Register.tsx
+- Format files on save using eslint rules
 - Document the usage of the gen script for graphql
 - ~~See if generics can be used in BaseEntity to allow for extensions like User to have static ORM functions like User.Create()~~
     - I don't think this is a good idea actually. A factory is probably better.
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
+
+DEBUGGING STEPS
+1. Is node installed and is it the correct version? Check nvm. `nvm list` and `nvm use 12.16.1`
+2. Is redis installed and running? `redis-server /usr/local/etc/redis.conf`
+3. Is postgres installed and running? `brew services start postgresql`
+ - If your computer crashed postgresql might be in a hung state on restart. Stop postgres and follow the steps [here](https://superuser.com/questions/553045/fatal-lock-file-postmaster-pid-already-exists) to correctly kill the hung process and then run the start command again.
+
+USEFULL TOOLS
+1. Postico
+2. [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+3. [urql Devtools](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm?hl=en-US)

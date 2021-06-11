@@ -4,10 +4,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { getUserFullName } from '@shared/utils';
-import { IUserModelCreated } from '@shared/models/User';
+import { IUserPersisted } from '@shared/models/User';
 
 interface IProps {
-  user: IUserModelCreated;
+  user: IUserPersisted;
 }
 
 export const User: React.FunctionComponent<IProps> = ({ user }) => (

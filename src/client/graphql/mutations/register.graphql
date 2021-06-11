@@ -11,8 +11,7 @@ mutation Register(
     password: $password,
   ) {
     user {
-      firstName,
-      lastName
+      ...BaseUser
     }
     errors {
       field

@@ -10,6 +10,8 @@ import LayersIcon from '@material-ui/icons/Layers';
 import GraphqlIcon from '@material-ui/icons/Grain';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonIcon from '@material-ui/icons/Person';
+import PeopleIcon from '@material-ui/icons/People';
+import RegisterIcon from '@material-ui/icons/Assignment';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
@@ -99,18 +101,33 @@ export const SideMenu: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='GraphQL' />
         </ListItem>
-        <ListItem button component={NavLinkMui} to='/register'>
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary='Register' />
-        </ListItem>
-        <ListItem button component={NavLinkMui} to='/login'>
-          <ListItemIcon>
-            <LockIcon />
-          </ListItemIcon>
-          <ListItemText primary='Log in' />
-        </ListItem>
+        <Divider />
+        <List>
+          <ListItem button component={NavLinkMui} to='/register'>
+            <ListItemIcon>
+              <RegisterIcon />
+            </ListItemIcon>
+            <ListItemText primary='Register' />
+          </ListItem>
+          <ListItem button component={NavLinkMui} to='/login'>
+            <ListItemIcon>
+              <LockIcon />
+            </ListItemIcon>
+            <ListItemText primary='Log in' />
+          </ListItem>
+          <ListItem button component={NavLinkMui} to='/users'>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary='Manage Users' />
+          </ListItem>
+          <ListItem button component={NavLinkMui} to='/register'>
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary='My Profile' />
+          </ListItem>
+        </List>
       </List>
     </Drawer>
   );

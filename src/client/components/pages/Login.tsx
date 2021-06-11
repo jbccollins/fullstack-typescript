@@ -16,7 +16,7 @@ import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { useMutation } from 'urql';
 import { useLoginMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -105,12 +105,13 @@ const Login: React.FC<registerProps> = () => {
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 id='email'
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                autoFocus={true}
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -120,7 +121,7 @@ const Login: React.FC<registerProps> = () => {
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
-                required
+                //required
                 fullWidth
                 name='password'
                 label='Password'
@@ -139,7 +140,7 @@ const Login: React.FC<registerProps> = () => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='/register' variant='body2'>
+              <Link component={RouterLink} to="/register">
                 Don't have an account? Register
               </Link>
             </Grid>

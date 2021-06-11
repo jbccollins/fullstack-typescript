@@ -3,11 +3,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import { createShallow } from '@material-ui/core/test-utils';
 import React from 'react';
-import { IUserModelCreated } from '@shared/models/User';
+import { IUserPersisted } from '@shared/models/User';
 import { User } from './User';
 
 describe('<User/>', () => {
-  const user: IUserModelCreated = {
+  const user: IUserPersisted = {
     id: 123,
     firstName: 'Gil',
     lastName: 'Amran',
