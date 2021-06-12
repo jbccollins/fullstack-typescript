@@ -79,7 +79,7 @@ const main = async (): Promise<void> => {
     // Create graphql endpoint http://localhost:3000/graphql
     apolloServer.applyMiddleware({ app, cors: false });
 
-    app.use;
+    //app.use;
     app.use('/assets', express.static(path.join(process.cwd(), 'assets')));
     app.use(apiRouter());
     app.use(staticsRouter());

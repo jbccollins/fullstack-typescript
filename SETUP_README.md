@@ -182,6 +182,7 @@ duplicate the paths there
 - Document the usage of the gen script for graphql
 - ~~See if generics can be used in BaseEntity to allow for extensions like User to have static ORM functions like User.Create()~~
     - I don't think this is a good idea actually. A factory is probably better.
+- Investigate server side rendering
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
 
