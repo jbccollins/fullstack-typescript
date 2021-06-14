@@ -6,7 +6,7 @@ const DEV_CONNECTION_OPTIONS = {
 };
 
 const PRODUCTION_CONNECTION_OPTIONS = {
-  connectionString: "postgres://htiasfxoxxvawb:kjhdsfsjdhf@ec2-23-23-184-76.compute-1.amazonaws.com:5432/d5ierv6dkg5jaq",
+  connectionString: "postgres://hahaha",
 }
 
 const OPTIONS = process.env.NODE_ENV === "production" ? PRODUCTION_CONNECTION_OPTIONS : DEV_CONNECTION_OPTIONS;
