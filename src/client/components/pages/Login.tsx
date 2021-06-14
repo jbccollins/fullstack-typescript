@@ -5,31 +5,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { CircularProgress, LinearProgress } from '@material-ui/core';
-import { useMutation } from 'urql';
+import { CircularProgress } from '@material-ui/core';
 import { useLoginMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
 import { useHistory, Link as RouterLink } from "react-router-dom";
-
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import ValidationService from '@shared/validation/ValidationService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,10 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const validationSchema = yup.object({
-  email: yup.string().email('Enter a valid email').required('Email is required'),
-  password: yup.string().required('Password is required'),
-});
+const validationService = new ValidationService();
+const validationSchema = validationService.loginSchema;
 
 interface registerProps {}
 
@@ -147,9 +130,6 @@ const Login: React.FC<registerProps> = () => {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 };

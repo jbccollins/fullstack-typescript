@@ -22,6 +22,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
 import { Provider as UrqlProvider } from 'urql';
 import { Login } from './components/pages/Login';
+import { ResetPassword } from './components/pages/ResetPassword';
 
 const client = createUrqlClient();
 
@@ -75,6 +76,7 @@ const App = () => {
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
             <Route path='/users' component={UsersListPage} />
+            <Route exact path='/reset-password/:token' component={ResetPassword} />
           </Switch>
         </main>
       </div>

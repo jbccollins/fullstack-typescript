@@ -1,5 +1,20 @@
 import nodemailer from "nodemailer";
 
+const forgotPasswordEmailBodyTemplate = `
+  <div>
+    Reset your password:
+    <a href="http://localhost:3000/reset-password/[token]">Reset Password</a>
+  </div>
+`;
+
+const formatEmailTemplate = (args: {[key: string] : string | number}, template: string) => {
+  let body = template;
+  Object.entries(args).forEach(([key, value]) => {
+    body = body.replace(`[${key}]`, String(value));
+  });
+  return body;
+}
+
 async function sendEmail(to: string, html: string) {
   // Find your credentials here: https://app.mailgun.com/app/sending/domains
   const transporter = nodemailer.createTransport({
@@ -34,3 +49,4 @@ async function sendEmail(to: string, html: string) {
 }
 
 export default sendEmail;
+export { forgotPasswordEmailBodyTemplate, formatEmailTemplate };

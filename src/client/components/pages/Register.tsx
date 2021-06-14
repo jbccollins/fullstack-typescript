@@ -5,31 +5,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { CircularProgress, LinearProgress } from '@material-ui/core';
-import { useMutation } from 'urql';
+import { CircularProgress } from '@material-ui/core';
 import { useRegisterMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
 import { useHistory, Link as RouterLink } from "react-router-dom";
-
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import ValidationService from '@shared/validation/ValidationService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,12 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const validationSchema = yup.object({
-  firstName: yup.string().required('First Name is required'),
-  lastName: yup.string().required('Last Name is required'),
-  email: yup.string().email('Enter a valid email').required('Email Address is required'),
-  password: yup.string().min(8, 'Password should be of minimum 8 characters length').required('Password is required'),
-});
+const validationService = new ValidationService();
+const validationSchema = validationService.registerSchema;
 
 interface registerProps {}
 
@@ -80,6 +61,7 @@ const Register: React.FC<registerProps> = () => {
       lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setErrors }) => {
@@ -168,6 +150,22 @@ const Register: React.FC<registerProps> = () => {
                 helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                //required
+                fullWidth
+                name='confirmPassword'
+                label='Confirm Password'
+                type='password'
+                id='password'
+                //autoComplete={false}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+              />
+            </Grid>
           </Grid>
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             Sign Up
@@ -181,9 +179,6 @@ const Register: React.FC<registerProps> = () => {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 };

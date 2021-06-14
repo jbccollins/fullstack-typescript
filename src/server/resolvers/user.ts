@@ -16,15 +16,17 @@ import {
 } from 'type-graphql';
 import { User } from '@database/entities/User';
 import { MyContext } from './types';
-import argon2 from 'argon2';
 import { IUserEntity } from '@database/entities/IUserEntity';
 import { CustomEntityManager } from '@database/helpers/CustomEntityManager';
 import { isAuth } from '@server/auth/authChecker';
 import { logger } from '@server/middleware/logger';
-import { EntityManager } from '@mikro-orm/postgresql';
-import { formatWithOptions } from 'util';
 import { SESSION_COOKIE_NAME } from '@server/config';
 import sleep from '@shared/utils/sleep';
+import hashPassword from '@server/auth/hashPassword';
+import validatePassword from '@server/auth/validatePassword';
+import sendEmail, { forgotPasswordEmailBodyTemplate, formatEmailTemplate } from '@server/utils/sendEmail';
+import { v4 as uuid } from 'uuid';
+import { FORGOT_PASSWORD_PREFIX } from '@server/constants/redis';
 
 @InputType()
 class EmailPasswordInput {
@@ -50,6 +52,8 @@ class UserResponse {
   user?: User;
 }
 
+const nonExistantUserError: UserResponse = {errors: [{ field: 'email', message: 'A user with that email does not exist' }]};
+
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
@@ -73,12 +77,20 @@ export class UserResolver {
     return ctx.orm.em.find(User, {});
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => UserResponse)
   async forgotPassword(
     @Arg('email') email: string,
-    @Ctx() { orm } : MyContext
+    @Ctx() { orm, redis } : MyContext
   ) {
     const user = await orm.em.findOne(User, { email })
+    if (!user) {
+      return nonExistantUserError;
+    }
+
+    const token = uuid();
+    await redis.set(FORGOT_PASSWORD_PREFIX + token, user.id, 'ex', 1000 * 60 * 60 * 24 * 3); // three days
+    await sendEmail(user.email, formatEmailTemplate({ token }, forgotPasswordEmailBodyTemplate));
+    return { user };
   }
 
   // Example Query:
@@ -141,7 +153,7 @@ export class UserResolver {
     if (errors.length > 0) {
       return { errors };
     }
-    const pwdHash = await argon2.hash(password);
+    const pwdHash = await hashPassword(password);
     const userEntity: IUserEntity = {
       firstName,
       lastName,
@@ -210,11 +222,10 @@ export class UserResolver {
   ): Promise<UserResponse> {
     const user = await orm.em.findOne(User, { email: options.email });
     if (!user) {
-      return {
-        errors: [{ field: 'email', message: 'A user with that email does not exist' }],
-      };
+      return nonExistantUserError;
     }
-    const valid = await argon2.verify(user.pwdHash, options.password);
+    const valid = await validatePassword(user.pwdHash, options.password);
+
     if (!valid) {
       return {
         errors: [{ field: 'password', message: 'Incorrect password' }],

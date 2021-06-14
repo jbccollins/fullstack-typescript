@@ -13,7 +13,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from '@server/resolvers/hello';
 import { UserResolver } from '@server/resolvers/user';
-import redis from 'redis';
+import Redis from 'ioredis';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { MyContext } from '@server/resolvers/types';
@@ -47,12 +47,12 @@ const main = async (): Promise<void> => {
     }));
 
     const RedisStore = connectRedis(session);
-    const redisClient = redis.createClient();
+    const redis = new Redis();
     app.use(
       session({
         name: SESSION_COOKIE_NAME,
         store: new RedisStore({
-          client: redisClient,
+          client: redis,
           // Don't refresh the user session in dev
           disableTouch: config.IS_DEV,
         }),
@@ -74,7 +74,7 @@ const main = async (): Promise<void> => {
         validate: false, //TODO: Should this be false?
         authChecker,
       }),
-      context: ({ req, res }): MyContext => ({ orm, req, res }),
+      context: ({ req, res }): MyContext => ({ orm, req, res, redis }),
     });
 
     // Create graphql endpoint http://localhost:3000/graphql
