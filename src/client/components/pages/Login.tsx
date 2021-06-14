@@ -74,8 +74,8 @@ const Login: React.FC<registerProps> = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'asdfasdfasdf@asdfasdf.c',
-      password: 'lkajshdfkljasdf',
+      email: 'jbccollins@gmail.com',
+      password: 'BookFlyVehicleGreen2865',
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setErrors }) => {

@@ -19,7 +19,21 @@ export class User extends PersistentEntity implements IUserEntity {
   @Property({ columnType: 'text', nullable: false })
   email!: string;
 
+  @Field(() => String)
+  @Unique()
+  @Property({ columnType: 'text', nullable: true })
+  username!: string;
+
   // Hide the pwdHash from graphql queries by omitting the @Field decorator
   @Property({ columnType: 'text', nullable: false })
   pwdHash!: string;
+
+  @Field(() => String)
+  public get name () {
+    if (this.username) {
+      return this.username;
+    } else {
+      return `${this.firstName} ${this.lastName}`
+    }
+  }
 }

@@ -20,6 +20,7 @@ import { MyContext } from '@server/resolvers/types';
 import { authChecker } from '@server/auth/authChecker';
 import cors from 'cors';
 import { SESSION_COOKIE_NAME } from '@server/config';
+import sendEmail from '@server/utils/sendEmail';
 
 const main = async (): Promise<void> => {
   try {
@@ -27,7 +28,7 @@ const main = async (): Promise<void> => {
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`config: ${JSON.stringify(config, null, 2)}`);
     console.log(`*******************************************`);
-
+    //sendEmail('jbccollins@gmail.com', 'hello');
     const orm = await ORM.getInstance();
     // Automatically run migrations:
     orm.getMigrator().up();

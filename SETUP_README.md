@@ -178,20 +178,27 @@ duplicate the paths there
 - Protect from graphql spam (see the ben awad graphql playlist on cost)
 - Add websocket support and examples (https://www.npmjs.com/package/graphql-ws)
 - Add documentation about formik and yup. See Register.tsx
+- Add yup validation to the shared folder and use it both client and server side
 - Format files on save using eslint rules
 - Document the usage of the gen script for graphql
 - ~~See if generics can be used in BaseEntity to allow for extensions like User to have static ORM functions like User.Create()~~
     - I don't think this is a good idea actually. A factory is probably better.
+- Soft deletion using ORM
 - Investigate server side rendering
+- Add Nodemailer as a feature
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
 
+VIDEO
+- SSR Stuff starts around 4:00. Talks about how to handle stuff like urql.
 DEBUGGING STEPS
 1. Is node installed and is it the correct version? Check nvm. `nvm list` and `nvm use 12.16.1`
 2. Is redis installed and running? `redis-server /usr/local/etc/redis.conf`
 3. Is postgres installed and running? `brew services start postgresql`
  - If your computer crashed postgresql might be in a hung state on restart. Stop postgres and follow the steps [here](https://superuser.com/questions/553045/fatal-lock-file-postmaster-pid-already-exists) to correctly kill the hung process and then run the start command again.
-
+4. Are ts-node and typescript installed globally?
+ - `npm install -g typescript`
+ - `npm install -g ts-node`
 USEFULL TOOLS
 1. Postico
 2. [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)

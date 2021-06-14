@@ -73,6 +73,14 @@ export class UserResolver {
     return ctx.orm.em.find(User, {});
   }
 
+  @Mutation(() => Boolean)
+  async forgotPassword(
+    @Arg('email') email: string,
+    @Ctx() { orm } : MyContext
+  ) {
+    const user = await orm.em.findOne(User, { email })
+  }
+
   // Example Query:
   // user(id: 40) {
   //   firstName,

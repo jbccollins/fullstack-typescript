@@ -3,6 +3,7 @@ import IPersistedObject from '@shared/models/IPersistedObject';
 export interface IUser {
   firstName: string;
   lastName: string;
+  username?: string;
   email: string;
 }
 
