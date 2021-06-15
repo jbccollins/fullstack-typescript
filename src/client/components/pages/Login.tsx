@@ -13,7 +13,7 @@ import { useFormik } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import { useLoginMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory, Link as RouterLink } from "react-router-dom";
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 import ValidationService from '@shared/validation/ValidationService';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,9 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const validationService = new ValidationService();
 const validationSchema = validationService.loginSchema;
 
-interface registerProps {}
-
-const Login: React.FC<registerProps> = () => {
+const Login: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -65,9 +63,9 @@ const Login: React.FC<registerProps> = () => {
       const response = await login({ options: values });
       if (response.data?.loginUser.errors) {
         setErrors(toErrorMap(response.data.loginUser.errors));
-      } else if(response.data?.loginUser.user) {
+      } else if (response.data?.loginUser.user) {
         // Go back to home page on success
-        history.push("/");
+        history.push('/');
       }
     },
   });
@@ -123,8 +121,15 @@ const Login: React.FC<registerProps> = () => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link component={RouterLink} to="/register">
-                Don't have an account? Register
+              <Link component={RouterLink} to='/register'>
+                Don&apos;t have an account? Register
+              </Link>
+            </Grid>
+          </Grid>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link component={RouterLink} to='/change-password'>
+                Forgot password?
               </Link>
             </Grid>
           </Grid>

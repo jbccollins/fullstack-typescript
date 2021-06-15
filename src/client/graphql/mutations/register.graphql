@@ -3,12 +3,14 @@ mutation Register(
     $lastName:String!,
     $email:String!,
     $password:String!,
+    $confirmPassword: String!,
   ){
   registerUser(
     firstName: $firstName,
     lastName: $lastName,
     email: $email,
     password: $password,
+    confirmPassword: $confirmPassword,
   ) {
     user {
       ...BaseUser

@@ -27,6 +27,8 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changePassword: UserResponse;
+  forgotPassword: UserResponse;
   registerUser: UserResponse;
   loginUser: UserResponse;
   logoutUser: Scalars['Boolean'];
@@ -34,19 +36,27 @@ export type Mutation = {
   deleteUser: Scalars['Boolean'];
 };
 
+export type MutationChangePasswordArgs = {
+  confirmPassword: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
+};
 
 export type MutationRegisterUserArgs = {
+  confirmPassword: Scalars['String'];
   password: Scalars['String'];
   email: Scalars['String'];
   lastName: Scalars['String'];
   firstName: Scalars['String'];
 };
 
-
 export type MutationLoginUserArgs = {
   options: EmailPasswordInput;
 };
-
 
 export type MutationUpdateUserArgs = {
   pwdHash?: Maybe<Scalars['String']>;
@@ -55,7 +65,6 @@ export type MutationUpdateUserArgs = {
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
 };
-
 
 export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
@@ -69,7 +78,6 @@ export type Query = {
   user?: Maybe<User>;
 };
 
-
 export type QueryUserArgs = {
   id: Scalars['Int'];
 };
@@ -82,6 +90,8 @@ export type User = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   email: Scalars['String'];
+  username: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type UserResponse = {
@@ -90,157 +100,192 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type BaseUserFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'email' | 'firstName' | 'lastName'>
-);
+export type BaseUserFragment = { __typename?: 'User' } & Pick<User, 'id' | 'email' | 'firstName' | 'lastName'>;
+
+export type ChangePasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  password: Scalars['String'];
+  confirmPassword: Scalars['String'];
+}>;
+
+export type ChangePasswordMutation = { __typename?: 'Mutation' } & {
+  changePassword: { __typename?: 'UserResponse' } & {
+    user?: Maybe<{ __typename?: 'User' } & BaseUserFragment>;
+    errors?: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>>>;
+  };
+};
+
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+export type ForgotPasswordMutation = { __typename?: 'Mutation' } & {
+  forgotPassword: { __typename?: 'UserResponse' } & {
+    user?: Maybe<{ __typename?: 'User' } & BaseUserFragment>;
+    errors?: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>>>;
+  };
+};
 
 export type LoginMutationVariables = Exact<{
   options: EmailPasswordInput;
 }>;
 
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  loginUser: { __typename?: 'UserResponse' } & {
+    errors?: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>>>;
+    user?: Maybe<{ __typename?: 'User' } & BaseUserFragment>;
+  };
+};
 
-export type LoginMutation = (
-  { __typename?: 'Mutation' }
-  & { loginUser: (
-    { __typename?: 'UserResponse' }
-    & { errors?: Maybe<Array<(
-      { __typename?: 'FieldError' }
-      & Pick<FieldError, 'field' | 'message'>
-    )>>, user?: Maybe<(
-      { __typename?: 'User' }
-      & BaseUserFragment
-    )> }
-  ) }
-);
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'logoutUser'>
-);
+export type LogoutMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'logoutUser'>;
 
 export type RegisterMutationVariables = Exact<{
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+  confirmPassword: Scalars['String'];
 }>;
 
+export type RegisterMutation = { __typename?: 'Mutation' } & {
+  registerUser: { __typename?: 'UserResponse' } & {
+    user?: Maybe<{ __typename?: 'User' } & BaseUserFragment>;
+    errors?: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>>>;
+  };
+};
 
-export type RegisterMutation = (
-  { __typename?: 'Mutation' }
-  & { registerUser: (
-    { __typename?: 'UserResponse' }
-    & { user?: Maybe<(
-      { __typename?: 'User' }
-      & BaseUserFragment
-    )>, errors?: Maybe<Array<(
-      { __typename?: 'FieldError' }
-      & Pick<FieldError, 'field' | 'message'>
-    )>> }
-  ) }
-);
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeQuery = { __typename?: 'Query' } & { me?: Maybe<{ __typename?: 'User' } & BaseUserFragment> };
 
+export type UsersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MeQuery = (
-  { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'User' }
-    & BaseUserFragment
-  )> }
-);
-
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UsersQuery = (
-  { __typename?: 'Query' }
-  & { users: Array<(
-    { __typename?: 'User' }
-    & BaseUserFragment
-  )> }
-);
+export type UsersQuery = { __typename?: 'Query' } & { users: Array<{ __typename?: 'User' } & BaseUserFragment> };
 
 export const BaseUserFragmentDoc = gql`
-    fragment BaseUser on User {
-  id
-  email
-  firstName
-  lastName
-}
-    `;
-export const LoginDocument = gql`
-    mutation Login($options: EmailPasswordInput!) {
-  loginUser(options: $options) {
-    errors {
-      field
-      message
-    }
-    user {
-      ...BaseUser
+  fragment BaseUser on User {
+    id
+    email
+    firstName
+    lastName
+  }
+`;
+export const ChangePasswordDocument = gql`
+  mutation ChangePassword($token: String!, $password: String!, $confirmPassword: String!) {
+    changePassword(token: $token, password: $password, confirmPassword: $confirmPassword) {
+      user {
+        ...BaseUser
+      }
+      errors {
+        field
+        message
+      }
     }
   }
+  ${BaseUserFragmentDoc}
+`;
+
+export function useChangePasswordMutation() {
+  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
 }
-    ${BaseUserFragmentDoc}`;
+export const ForgotPasswordDocument = gql`
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      user {
+        ...BaseUser
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+  ${BaseUserFragmentDoc}
+`;
+
+export function useForgotPasswordMutation() {
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
+}
+export const LoginDocument = gql`
+  mutation Login($options: EmailPasswordInput!) {
+    loginUser(options: $options) {
+      errors {
+        field
+        message
+      }
+      user {
+        ...BaseUser
+      }
+    }
+  }
+  ${BaseUserFragmentDoc}
+`;
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-};
-export const LogoutDocument = gql`
-    mutation Logout {
-  logoutUser
 }
-    `;
+export const LogoutDocument = gql`
+  mutation Logout {
+    logoutUser
+  }
+`;
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
-};
+}
 export const RegisterDocument = gql`
-    mutation Register($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-  registerUser(
-    firstName: $firstName
-    lastName: $lastName
-    email: $email
-    password: $password
+  mutation Register(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
   ) {
-    user {
-      ...BaseUser
-    }
-    errors {
-      field
-      message
+    registerUser(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      user {
+        ...BaseUser
+      }
+      errors {
+        field
+        message
+      }
     }
   }
-}
-    ${BaseUserFragmentDoc}`;
+  ${BaseUserFragmentDoc}
+`;
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
-};
-export const MeDocument = gql`
-    query Me {
-  me {
-    ...BaseUser
-  }
 }
-    ${BaseUserFragmentDoc}`;
+export const MeDocument = gql`
+  query Me {
+    me {
+      ...BaseUser
+    }
+  }
+  ${BaseUserFragmentDoc}
+`;
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-};
-export const UsersDocument = gql`
-    query Users {
-  users {
-    ...BaseUser
-  }
 }
-    ${BaseUserFragmentDoc}`;
+export const UsersDocument = gql`
+  query Users {
+    users {
+      ...BaseUser
+    }
+  }
+  ${BaseUserFragmentDoc}
+`;
 
 export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
-};
+}

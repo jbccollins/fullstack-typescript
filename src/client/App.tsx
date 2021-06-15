@@ -8,7 +8,7 @@ import { SideMenu } from '@components/Examples/SideMenu';
 import { StyledComponentsExample } from '@components/Examples/StyledComponentsExample';
 import { Usage } from '@components/Examples/Usage';
 import { UsersList } from '@components/Examples/UsersList';
-import { UsersList as UsersListPage} from '@components/pages/UsersList';
+import { UsersList as UsersListPage } from '@components/pages/UsersList';
 import { Register } from '@components/pages/Register';
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
@@ -22,7 +22,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
 import { Provider as UrqlProvider } from 'urql';
 import { Login } from './components/pages/Login';
-import { ResetPassword } from './components/pages/ResetPassword';
+import { ChangePassword } from './components/pages/ChangePassword';
 
 const client = createUrqlClient();
 
@@ -76,7 +76,8 @@ const App = () => {
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
             <Route path='/users' component={UsersListPage} />
-            <Route exact path='/reset-password/:token' component={ResetPassword} />
+            <Route exact path='/change-password/:token' component={ChangePassword} />
+            <Route path='/change-password' component={ChangePassword} />
           </Switch>
         </main>
       </div>
@@ -89,9 +90,9 @@ const AppWrapper = () => {
     <ReduxProvider store={store}>
       {' '}
       <UrqlProvider value={client}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </UrqlProvider>
     </ReduxProvider>
   );

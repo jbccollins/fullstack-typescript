@@ -41,10 +41,12 @@ const main = async (): Promise<void> => {
     });
 
     // Globally apply cors to all routes:
-    app.use(cors({
-      origin: "http://localhost:3000",
-      credentials: true
-    }));
+    app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+      }),
+    );
 
     const RedisStore = connectRedis(session);
     const redis = new Redis();

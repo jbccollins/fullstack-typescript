@@ -21,10 +21,13 @@ import { CustomEntityManager } from '@database/helpers/CustomEntityManager';
 import { isAuth } from '@server/auth/authChecker';
 import { logger } from '@server/middleware/logger';
 import { SESSION_COOKIE_NAME } from '@server/config';
-import sleep from '@shared/utils/sleep';
 import hashPassword from '@server/auth/hashPassword';
 import validatePassword from '@server/auth/validatePassword';
-import sendEmail, { forgotPasswordEmailBodyTemplate, formatEmailTemplate } from '@server/utils/sendEmail';
+import sendEmail, {
+  changePasswordSuccess,
+  forgotPasswordEmailBodyTemplate,
+  formatEmailTemplate,
+} from '@server/utils/sendEmail';
 import { v4 as uuid } from 'uuid';
 import { FORGOT_PASSWORD_PREFIX } from '@server/constants/redis';
 
@@ -52,10 +55,85 @@ class UserResponse {
   user?: User;
 }
 
-const nonExistantUserError: UserResponse = {errors: [{ field: 'email', message: 'A user with that email does not exist' }]};
+const nonExistantUserError: UserResponse = {
+  errors: [{ field: 'email', message: 'A user with that email does not exist' }],
+};
 
 @Resolver()
 export class UserResolver {
+  @Mutation(() => UserResponse)
+  async changePassword(
+    @Arg('token') token: string,
+    @Arg('password') password: string,
+    @Arg('confirmPassword') confirmPassword: string,
+    @Ctx() { redis, orm, req }: MyContext,
+  ): Promise<UserResponse> {
+    const errors: FieldError[] = [];
+    if (confirmPassword != password) {
+      errors.push({
+        field: 'password',
+        message: 'Passwords must match',
+      });
+    }
+    if (password.length === 0) {
+      errors.push({
+        field: 'password',
+        message: 'password field is required',
+      });
+    }
+    if (confirmPassword.length === 0) {
+      errors.push({
+        field: 'confirmPassword',
+        message: 'confirmPassword field is required',
+      });
+    }
+    if (token.length === 0) {
+      errors.push({
+        field: 'token',
+        message: 'token field is required',
+      });
+    }
+    if (errors.length > 0) {
+      return { errors };
+    }
+    const key = FORGOT_PASSWORD_PREFIX + token;
+    const userId = await redis.get(key);
+
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'token expired or invalid',
+          },
+        ],
+      };
+    }
+
+    const user = await orm.em.findOne(User, { id: parseInt(userId) });
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'user no longer exists',
+          },
+        ],
+      };
+    }
+
+    user.pwdHash = await hashPassword(password);
+    orm.em.persistAndFlush(user);
+    // Ensure that the token is only good for a single password change
+    redis.del(key);
+    await sendEmail(user.email, formatEmailTemplate({}, changePasswordSuccess));
+
+    // log in the user after they reset their password
+    req.session.userId = user.id;
+
+    return { user };
+  }
+
   @Query(() => User, { nullable: true })
   async me(@Ctx() { orm, req }: MyContext): Promise<User> {
     // you are not logged in
@@ -73,16 +151,12 @@ export class UserResolver {
   // }
   @Query(() => [User])
   async users(@Ctx() ctx: MyContext): Promise<User[]> {
-    await sleep(2000);
     return ctx.orm.em.find(User, {});
   }
 
   @Mutation(() => UserResponse)
-  async forgotPassword(
-    @Arg('email') email: string,
-    @Ctx() { orm, redis } : MyContext
-  ) {
-    const user = await orm.em.findOne(User, { email })
+  async forgotPassword(@Arg('email') email: string, @Ctx() { orm, redis }: MyContext): Promise<UserResponse> {
+    const user = await orm.em.findOne(User, { email });
     if (!user) {
       return nonExistantUserError;
     }
@@ -123,9 +197,16 @@ export class UserResolver {
     @Arg('lastName', () => String) lastName: string,
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
+    @Arg('confirmPassword', () => String) confirmPassword: string,
     @Ctx() { req, orm }: MyContext,
   ): Promise<UserResponse> {
     const errors: FieldError[] = [];
+    if (confirmPassword != password) {
+      errors.push({
+        field: 'password',
+        message: 'Passwords must match',
+      });
+    }
     if (firstName.length === 0) {
       errors.push({
         field: 'firstName',
@@ -248,19 +329,20 @@ export class UserResolver {
   //@Authorized()
   @UseMiddleware(isAuth, logger)
   @Mutation(() => Boolean)
-  async logoutUser(@Ctx() { req, res }: MyContext): Promise<Boolean> {
-    
-    return new Promise(resolve => req.session.destroy(err => {
-      if(err) {
-        // TODO: Add actual logging here
-        console.log(err);
-        resolve(false);
-        return;
-      }
-      // TODO: Pull the 'qid' variable out into a constants file
-      res.clearCookie(SESSION_COOKIE_NAME);
-      resolve(true);
-    }));
+  async logoutUser(@Ctx() { req, res }: MyContext): Promise<boolean> {
+    return new Promise((resolve) =>
+      req.session.destroy((err) => {
+        if (err) {
+          // TODO: Add actual logging here
+          console.log(err);
+          resolve(false);
+          return;
+        }
+        // TODO: Pull the 'qid' variable out into a constants file
+        res.clearCookie(SESSION_COOKIE_NAME);
+        resolve(true);
+      }),
+    );
 
     return true;
   }

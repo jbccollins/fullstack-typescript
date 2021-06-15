@@ -7,5 +7,5 @@ export type MyContext = {
   orm: MikroORM<IDatabaseDriver<Connection>>;
   req: Request & { session: Session & Partial<SessionData> & { userId?: number } };
   res: Response;
-  redis: Redis
+  redis: Redis;
 };

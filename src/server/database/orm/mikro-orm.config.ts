@@ -8,7 +8,7 @@ export default {
   // ./dist/server/database/entities
   //TODO: Do I need BaseEntity here as well?
   entities: [User], // path to your JS entities (dist), relative to `baseDir`
-  dbName: DB_NAME,//'jamescollins',
+  dbName: DB_NAME, //'jamescollins',
   user: DB_USER, //'jamescollins',
   password: DB_PASSWORD, //'',
   type: DB_DIALECT, //'postgresql',

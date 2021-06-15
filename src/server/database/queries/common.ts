@@ -6,30 +6,28 @@ const DEV_CONNECTION_OPTIONS = {
 };
 
 const PRODUCTION_CONNECTION_OPTIONS = {
-  connectionString: "postgres://hahaha",
-}
+  connectionString: 'postgres://hahaha',
+};
 
-const OPTIONS = process.env.NODE_ENV === "production" ? PRODUCTION_CONNECTION_OPTIONS : DEV_CONNECTION_OPTIONS;
+const OPTIONS = process.env.NODE_ENV === 'production' ? PRODUCTION_CONNECTION_OPTIONS : DEV_CONNECTION_OPTIONS;
 
-const executeQuery = async (sql: string, params=[], options=OPTIONS) => {
+const executeQuery = async (sql: string, params = [], options = OPTIONS): Promise<any> => {
   try {
-    const client = new Client(options)
-    await client.connect()
-    const res = await client.query(sql, params)
-    await client.end()
-    return ({success: true, rows: res.rows});
+    const client = new Client(options);
+    await client.connect();
+    const res = await client.query(sql, params);
+    await client.end();
+    return { success: true, rows: res.rows };
   } catch (e) {
-    console.log(">>>>>>>>ERROR<<<<<<<<<")
+    console.log('>>>>>>>>ERROR<<<<<<<<<');
     console.log(e);
     // console.log(">>>>>>>>>SQL<<<<<<<<<<")
     // console.log(sql);
-    return ({
+    return {
       //error: e
-      error: true
-    });
+      error: true,
+    };
   }
 };
 
-export {
-  executeQuery,
-};
+export { executeQuery };

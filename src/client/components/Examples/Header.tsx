@@ -3,7 +3,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useLogoutMutation, useMeQuery } from '@client/generated/graphql';
-import { useHistory, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     spacer: {
       marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1)
-    }
+      marginRight: theme.spacing(1),
+    },
   }),
 );
 export const Header: React.FunctionComponent = () => {
@@ -30,8 +30,8 @@ export const Header: React.FunctionComponent = () => {
   //const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [{data, fetching: meFetching}] = useMeQuery();
-  const [{fetching: logoutFetching}, logout] = useLogoutMutation();
+  const [{ data, fetching: meFetching }] = useMeQuery();
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   let auth = false;
 
   if (meFetching) {
@@ -57,42 +57,42 @@ export const Header: React.FunctionComponent = () => {
   const handleLogout = () => {
     logout();
     handleClose();
-  }
+  };
 
   const handleLogin = () => {
     handleClose();
-  }
-  
+  };
+
   return (
     <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>
         <Typography variant='h6' noWrap className={classes.title}>
-          Fullstack TypeScript!!!
+          Fullstack TypeScript
         </Typography>
         {!auth && (
           <>
-            <Link color='inherit' component={RouterLink} to="/login">
-                Log in
+            <Link color='inherit' component={RouterLink} to='/login'>
+              Log in
             </Link>
-            <span className={classes.spacer} >|</span>
-            <Link color='inherit' component={RouterLink} to="/register">
-                Register
+            <span className={classes.spacer}>|</span>
+            <Link color='inherit' component={RouterLink} to='/register'>
+              Register
             </Link>
           </>
         )}
         {auth && (
           <div>
             <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleMenu}
-              color="inherit"
+              color='inherit'
             >
               <AccountCircle />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorEl}
               anchorOrigin={{
                 vertical: 'top',
@@ -106,8 +106,16 @@ export const Header: React.FunctionComponent = () => {
               open={open}
               onClose={handleClose}
             >
-              {auth && <MenuItem disabled={logoutFetching} onClick={handleClose}>My Profile</MenuItem>}
-              {auth && <MenuItem disabled={logoutFetching} onClick={handleLogout}>Log out</MenuItem>}
+              {auth && (
+                <MenuItem disabled={logoutFetching} onClick={handleClose}>
+                  My Profile
+                </MenuItem>
+              )}
+              {auth && (
+                <MenuItem disabled={logoutFetching} onClick={handleLogout}>
+                  Log out
+                </MenuItem>
+              )}
               {/* {!auth && <MenuItem onClick={handleLogin}>Log in</MenuItem>} */}
             </Menu>
           </div>

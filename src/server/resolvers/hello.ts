@@ -2,7 +2,7 @@ import { Query, Resolver } from 'type-graphql';
 @Resolver()
 export class HelloResolver {
   @Query(() => String)
-  hello() {
+  hello(): string {
     return 'hello world';
   }
 }

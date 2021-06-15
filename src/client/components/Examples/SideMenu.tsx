@@ -1,4 +1,16 @@
-import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles, ListItemProps, ExtendButtonBase, ListItemTypeMap, SvgIconTypeMap } from '@material-ui/core';
+import {
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+  ListItemProps,
+  ExtendButtonBase,
+  ListItemTypeMap,
+  SvgIconTypeMap,
+} from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import UsageIcon from '@material-ui/icons/Code';
 import HomeIcon from '@material-ui/icons/Home';
@@ -12,6 +24,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import RegisterIcon from '@material-ui/icons/Assignment';
+import PasswordIcon from '@material-ui/icons/VpnKey';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
@@ -114,6 +127,12 @@ export const SideMenu: React.FunctionComponent = () => {
               <LockIcon />
             </ListItemIcon>
             <ListItemText primary='Log in' />
+          </ListItem>
+          <ListItem button component={NavLinkMui} to='/change-password'>
+            <ListItemIcon>
+              <PasswordIcon />
+            </ListItemIcon>
+            <ListItemText primary='Change Password' />
           </ListItem>
           <ListItem button component={NavLinkMui} to='/users'>
             <ListItemIcon>

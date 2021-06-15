@@ -1,29 +1,29 @@
 import { CircularProgress, createStyles, makeStyles } from '@material-ui/core';
 import React from 'react';
 
-interface CircularLoadingIndicatorProps {
-  disableShrink?: boolean,
-  extraClasses?: string[]
+interface ICircularLoadingIndicatorProps {
+  disableShrink?: boolean;
+  extraClasses?: string[];
 }
 
 const useStyles = makeStyles(() =>
   createStyles({
     loadingIndicator: {
-      display: 'inline-block'
-    }
-  })
+      display: 'inline-block',
+    },
+  }),
 );
 
-export const CircularLoadingIndicator: React.FC<CircularLoadingIndicatorProps> = ({ disableShrink = true, extraClasses = [] }) => {
+export const CircularLoadingIndicator: React.FC<ICircularLoadingIndicatorProps> = ({
+  disableShrink = true,
+  extraClasses = [],
+}) => {
   const classes = useStyles();
   const className = classes.loadingIndicator + ` ${extraClasses.join(' ')}`;
 
   return (
     <div className={className}>
-      <CircularProgress
-        variant="indeterminate"
-        disableShrink={disableShrink}
-      />
+      <CircularProgress variant='indeterminate' disableShrink={disableShrink} />
     </div>
   );
-}
+};

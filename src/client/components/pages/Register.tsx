@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -13,7 +13,7 @@ import { useFormik } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import { useRegisterMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory, Link as RouterLink } from "react-router-dom";
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 import ValidationService from '@shared/validation/ValidationService';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,9 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const validationService = new ValidationService();
 const validationSchema = validationService.registerSchema;
 
-interface registerProps {}
-
-const Register: React.FC<registerProps> = () => {
+const Register: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -68,9 +66,9 @@ const Register: React.FC<registerProps> = () => {
       const response = await register(values);
       if (response.data?.registerUser.errors) {
         setErrors(toErrorMap(response.data.registerUser.errors));
-      } else if(response.data?.registerUser.user) {
+      } else if (response.data?.registerUser.user) {
         // Go back to home page on success
-        history.push("/");
+        history.push('/');
       }
     },
   });
@@ -172,8 +170,15 @@ const Register: React.FC<registerProps> = () => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link component={RouterLink} to="/login">
+              <Link component={RouterLink} to='/login'>
                 Already have an account? Log in
+              </Link>
+            </Grid>
+          </Grid>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link component={RouterLink} to='/change-password'>
+                Forgot password?
               </Link>
             </Grid>
           </Grid>

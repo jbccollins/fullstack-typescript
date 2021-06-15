@@ -94,6 +94,7 @@
   },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@mikro-orm/cli": "^4.5.4",
     "@mikro-orm/core": "^4.5.4",
     "@mikro-orm/migrations": "^4.5.4",

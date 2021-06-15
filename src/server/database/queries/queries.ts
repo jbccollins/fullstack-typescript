@@ -1,8 +1,12 @@
 import { executeQuery } from './common';
 import hashPassword from '@server/auth/hashPassword';
 
-const registerUser = async (firstName: string, lastName: string, email: string, plaintextPassword: string) => {
-
+const registerUser = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  plaintextPassword: string,
+): Promise<any> => {
   const hashedPassword = await hashPassword(plaintextPassword);
 
   /*
@@ -16,16 +20,13 @@ const registerUser = async (firstName: string, lastName: string, email: string, 
     ON CONFLICT (email) DO NOTHING
     RETURNING id;`;
   const queryResults = await executeQuery(sql, [firstName, lastName, email, hashedPassword]);
-	return queryResults;
+  return queryResults;
 };
 
-const getUserByEmail = async (email: string) => {
+const getUserByEmail = async (email: string): Promise<any> => {
   const sql = `SELECT * FROM user WHERE email = $1`;
-	const queryResults = await executeQuery(sql, [email]);
-	return queryResults;
-}
-
-export {
-  getUserByEmail,
-  registerUser,
+  const queryResults = await executeQuery(sql, [email]);
+  return queryResults;
 };
+
+export { getUserByEmail, registerUser };

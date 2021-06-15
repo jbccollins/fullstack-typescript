@@ -7,5 +7,5 @@ const main = async () => {
   await populateUserTable();
   console.log(chalk.green(`>>>>> Finished database population`));
   process.exit();
-}
+};
 main();
