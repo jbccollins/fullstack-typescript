@@ -1,5 +1,7 @@
 # FAST FullStack React with TypeScript starter kit.
 
+![Travis CI Badge](https://travis-ci.com/jbccollins/fullstack-typescript.svg?branch=master)
+
 <img src="https://github.com/gilamran/fullstack-typescript/raw/master/assets/images/logo.png" width="150">
 
 ---
