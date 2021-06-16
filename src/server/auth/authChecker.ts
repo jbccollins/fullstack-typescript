@@ -18,10 +18,13 @@ import { AuthChecker, MiddlewareFn } from 'type-graphql';
     };
   }
 */
-export const authChecker: AuthChecker<MyContext> = ({ root, args, context, info }, roles) => {
+export const authChecker: AuthChecker<MyContext> = ({ context }, roles) => {
   // here we can read the user from context
   // and check their permission in the db against the `roles` argument
   // that comes from the `@Authorized` decorator, eg. ["ADMIN", "MODERATOR"]
+  if (roles) {
+    // roles logic here
+  }
   return !!context.req.session.userId;
 };
 
@@ -41,7 +44,7 @@ export const authChecker: AuthChecker<MyContext> = ({ root, args, context, info 
     };
   }
 */
-export const isAuth: MiddlewareFn<MyContext> = async ({ root, args, context, info }, next) => {
+export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
   if (!context.req.session.userId) {
     throw new Error('Not logged in');
   }

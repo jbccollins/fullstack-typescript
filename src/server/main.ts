@@ -6,7 +6,6 @@ import { apiRouter } from '@routes/api-router';
 import { pagesRouter } from '@routes/pages-router';
 import { staticsRouter } from '@routes/statics-router';
 import { ORM } from '@database/orm/ORM';
-import { User } from '@database/entities/User';
 import chalk from 'chalk';
 import * as config from '@server/config';
 import { ApolloServer } from 'apollo-server-express';
@@ -20,7 +19,6 @@ import { MyContext } from '@server/resolvers/types';
 import { authChecker } from '@server/auth/authChecker';
 import cors from 'cors';
 import { SESSION_COOKIE_NAME } from '@server/config';
-import sendEmail from '@server/utils/sendEmail';
 
 const main = async (): Promise<void> => {
   try {

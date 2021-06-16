@@ -1,20 +1,11 @@
-import {
-  MikroORM,
-  IDatabaseDriver,
-  Connection,
-  Entity,
-  EntityName,
-  EntityData,
-  AnyEntity,
-  Populate,
-} from '@mikro-orm/core';
+import { EntityName, EntityData, AnyEntity } from '@mikro-orm/core';
 import { ORM } from '@database/orm/ORM';
 
 export class CustomEntityManager {
   /*
     create, persiste and flush all in the same async function.
   */
-  static async createAndSave<T extends AnyEntity<T>, P extends Populate<T> = any>(
+  static async createAndSave<T extends AnyEntity<T>>(
     entityName: EntityName<T>,
     data: EntityData<T>,
     options?: {

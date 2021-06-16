@@ -1,4 +1,4 @@
-import { Connection, EntityCaseNamingStrategy, IDatabaseDriver, MikroORM } from '@mikro-orm/core';
+import { Connection, IDatabaseDriver, MikroORM } from '@mikro-orm/core';
 import chalk from 'chalk';
 import config from '@database/orm/mikro-orm.config';
 

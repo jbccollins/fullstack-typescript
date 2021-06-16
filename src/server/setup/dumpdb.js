@@ -1,11 +1,11 @@
 import { exec } from 'child_process';
 import { getVersionedDumpPath, getVersion, incrementVersion, VERSION_PATH } from './paths';
 import chalk from 'chalk';
-const argv = require("yargs").argv;
+const argv = require('yargs').argv;
 
 const dbname = argv.dbname;
 
-if (!dbname || dbname === "") {
+if (!dbname || dbname === '') {
   console.log(chalk.red(`[dbname] not specified. Usage: yarn dumpdb --dbname my-database\n`));
   process.exit();
 }

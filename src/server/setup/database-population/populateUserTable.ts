@@ -20,8 +20,7 @@ const main = async (): Promise<void> => {
     email,
     pwdHash,
   };
-  let user: User = null;
-  user = await CustomEntityManager.createAndSave(User, userEntity);
+  await CustomEntityManager.createAndSave(User, userEntity);
 };
 
 export default main;

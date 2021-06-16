@@ -1,19 +1,7 @@
 /*
 A simple CRUD interface for Users that integrates mikroorm, type-grahql, postgresql and typescript.
 */
-import {
-  Arg,
-  Authorized,
-  Ctx,
-  Field,
-  InputType,
-  Int,
-  Mutation,
-  ObjectType,
-  Query,
-  Resolver,
-  UseMiddleware,
-} from 'type-graphql';
+import { Arg, Ctx, Field, InputType, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { User } from '@database/entities/User';
 import { MyContext } from './types';
 import { IUserEntity } from '@database/entities/IUserEntity';
@@ -198,7 +186,7 @@ export class UserResolver {
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
     @Arg('confirmPassword', () => String) confirmPassword: string,
-    @Ctx() { req, orm }: MyContext,
+    @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors: FieldError[] = [];
     if (confirmPassword != password) {

@@ -9,8 +9,9 @@
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
-    "lint-fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "lint-fix": "eslint 'src/**/*.{ts,tsx}' --fix --max-warnings=0",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
     "start": "node index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "type-check-client": "tsc -p ./src/client/tsconfig.json",
@@ -30,7 +31,8 @@
     "gen": "graphql-codegen --config codegen.yml",
     "initdb": "babel-node setup/initdb.js",
     "dumpdb": "babel-node setup/dumpdb.js",
-    "force-publish": "heroku pg:reset && heroku pg:push fullstack-typescript DATABASE_URL --app fullstack-typescript-web; git push heroku master"
+    "force-publish": "heroku pg:reset && heroku pg:push fullstack-typescript DATABASE_URL --app fullstack-typescript-web; git push heroku master",
+    "prepare": "husky install"
   },
   "keywords": [
     "typescript",
@@ -47,7 +49,7 @@
     "url": "https://github.com/gilamran/fullstack-typescript.git"
   },
   "license": "MIT",
-  "author": "Gil Amran",
+  "author": "James Collins",
   "jest": {
     "roots": [
       "<rootDir>/src"
@@ -190,9 +192,12 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-unused-imports": "^1.1.1",
     "file-loader": "^6.2.0",
     "http-proxy-middleware": "^1.0.6",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
+    "lint-staged": "^11.0.0",
     "module-alias": "^2.2.2",
     "postcss": "^8.2.14",
     "postcss-loader": "^4.2.0",

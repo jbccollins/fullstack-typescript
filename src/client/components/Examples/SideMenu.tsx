@@ -1,16 +1,4 @@
-import {
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  makeStyles,
-  ListItemProps,
-  ExtendButtonBase,
-  ListItemTypeMap,
-  SvgIconTypeMap,
-} from '@material-ui/core';
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import UsageIcon from '@material-ui/icons/Code';
 import HomeIcon from '@material-ui/icons/Home';
@@ -26,8 +14,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import RegisterIcon from '@material-ui/icons/Assignment';
 import PasswordIcon from '@material-ui/icons/VpnKey';
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import { NavLink } from 'react-router-dom';
 
 class NavLinkMui extends React.Component<any> {
   render() {

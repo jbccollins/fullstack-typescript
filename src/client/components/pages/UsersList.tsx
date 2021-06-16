@@ -1,10 +1,10 @@
 import { useUsersQuery } from '@client/generated/graphql';
 import React from 'react';
 import { RelativeLoadingOverlay } from '@components/Layout/RelativeLoadingOverlay';
-import { Grid, Card, CardHeader, CardContent, List, ListItem, Box } from '@material-ui/core';
+import { Grid, Card, CardHeader, CardContent, List, Box } from '@material-ui/core';
 
 export const UsersList: React.FC = () => {
-  const [{ fetching, data }, results] = useUsersQuery();
+  const [{ fetching, data }, _results] = useUsersQuery();
   return (
     <>
       <Grid item xs={12}>

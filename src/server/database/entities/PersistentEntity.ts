@@ -1,4 +1,4 @@
-import { PrimaryKey, Property, Entity, EntityData } from '@mikro-orm/core';
+import { PrimaryKey, Property, Entity } from '@mikro-orm/core';
 import { Field, Int, ObjectType } from 'type-graphql';
 import IPersistentObject from '@shared/models/IPersistentObject';
 

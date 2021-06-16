@@ -24,7 +24,7 @@ export const createUrqlClient = (): Client => {
         updates: {
           Mutation: {
             // These keys must match up with the names of the mutations
-            loginUser: (_result: LoginMutation, args, cache, info) => {
+            loginUser: (_result: LoginMutation, _args, cache, _info) => {
               betterUpdateQuery<LoginMutation, MeQuery>(cache, { query: MeDocument }, _result, (result, query) => {
                 if (result.loginUser.errors) {
                   return query;
@@ -35,13 +35,13 @@ export const createUrqlClient = (): Client => {
                 }
               });
             },
-            logoutUser: (_result: LogoutMutation, args, cache, info) => {
+            logoutUser: (_result: LogoutMutation, _args, cache, _info) => {
               betterUpdateQuery<LogoutMutation, MeQuery>(cache, { query: MeDocument }, _result, () => {
                 // Always clear the current user from the cache regardless of success or fail
                 return { me: null };
               });
             },
-            registerUser: (_result: RegisterMutation, args, cache, info) => {
+            registerUser: (_result: RegisterMutation, _args, cache, _info) => {
               betterUpdateQuery<RegisterMutation, MeQuery>(cache, { query: MeDocument }, _result, (result, query) => {
                 if (result.registerUser.errors) {
                   return query;
@@ -52,7 +52,7 @@ export const createUrqlClient = (): Client => {
                 }
               });
             },
-            changePassword: (_result: ChangePasswordMutation, args, cache, info) => {
+            changePassword: (_result: ChangePasswordMutation, _args, cache, _info) => {
               betterUpdateQuery<ChangePasswordMutation, MeQuery>(
                 cache,
                 { query: MeDocument },

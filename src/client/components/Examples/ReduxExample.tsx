@@ -5,14 +5,7 @@ import SubtractIcon from '@material-ui/icons/Remove';
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '@store/hooks';
 
-import {
-  decrement,
-  increment,
-  incrementByAmountAsync,
-  incrementByAmount,
-  reset,
-  selectCounter,
-} from '@store/slices/counterSlice';
+import { decrement, increment, selectCounter } from '@store/slices/counterSlice';
 
 const useStyles = makeStyles(() => ({
   CounterValue: {
@@ -28,7 +21,7 @@ export const ReduxExample: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   // State selectors
-  const { value, loading, error } = useAppSelector(selectCounter);
+  const { value } = useAppSelector(selectCounter);
 
   const handleDecrementClick = () => {
     dispatch(decrement());

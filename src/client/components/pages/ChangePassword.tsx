@@ -4,9 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,7 +12,6 @@ import { useFormik } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import { FieldError, useChangePasswordMutation, useForgotPasswordMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory, Link as RouterLink } from 'react-router-dom';
 import ValidationService from '@shared/validation/ValidationService';
 import PasswordIcon from '@material-ui/icons/VpnKey';
 import Alert from '@material-ui/lab/Alert';
@@ -64,7 +61,6 @@ type ChangePasswordParams = {
 export const ChangePassword: React.FC = () => {
   const { token } = useParams<ChangePasswordParams>();
   const classes = useStyles();
-  const history = useHistory();
 
   const [, forgotPassord] = useForgotPasswordMutation();
   const [, changePassword] = useChangePasswordMutation();

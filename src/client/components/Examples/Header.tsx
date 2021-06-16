@@ -59,10 +59,6 @@ export const Header: React.FunctionComponent = () => {
     handleClose();
   };
 
-  const handleLogin = () => {
-    handleClose();
-  };
-
   return (
     <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>

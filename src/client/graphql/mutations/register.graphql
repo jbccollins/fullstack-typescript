@@ -1,16 +1,16 @@
 mutation Register(
-    $firstName:String!,
-    $lastName:String!,
-    $email:String!,
-    $password:String!,
-    $confirmPassword: String!,
-  ){
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $password: String!
+  $confirmPassword: String!
+) {
   registerUser(
-    firstName: $firstName,
-    lastName: $lastName,
-    email: $email,
-    password: $password,
-    confirmPassword: $confirmPassword,
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    password: $password
+    confirmPassword: $confirmPassword
   ) {
     user {
       ...BaseUser

@@ -26,11 +26,11 @@ const config: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
     alias: {
-      "@shared": path.resolve(__dirname, 'src/shared/'),
-      "@components": path.resolve(__dirname, 'src/client/components'),
-      "@store": path.resolve(__dirname, 'src/client/store'),
-      "@utils": path.resolve(__dirname, 'src/client/utils'),
-      "@client": path.resolve(__dirname, 'src/client'),
+      '@shared': path.resolve(__dirname, 'src/shared/'),
+      '@components': path.resolve(__dirname, 'src/client/components'),
+      '@store': path.resolve(__dirname, 'src/client/store'),
+      '@utils': path.resolve(__dirname, 'src/client/utils'),
+      '@client': path.resolve(__dirname, 'src/client'),
       //"@features": path.resolve(__dirname, 'src/client/features'),
     },
   },
@@ -66,7 +66,12 @@ const config: Configuration = {
               '@babel/proposal-numeric-separator',
               '@babel/plugin-transform-runtime',
               ['@babel/plugin-proposal-decorators', { legacy: true }],
-              ['@babel/plugin-proposal-class-properties', { /*loose: true*/ }],
+              [
+                '@babel/plugin-proposal-class-properties',
+                {
+                  /*loose: true*/
+                },
+              ],
               '@babel/plugin-proposal-object-rest-spread',
             ],
           },

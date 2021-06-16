@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "isolatedModules": true,
     "lib": ["ES2019"],
-    "module": "commonjs",      
+    "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "../../dist/shared",
     "skipLibCheck": true,
@@ -19,5 +19,5 @@
     }
   },
   "include": ["./**/*.ts"],
-  "exclude": ["./**/*.test.ts"],
+  "exclude": ["./**/*.test.ts"]
 }

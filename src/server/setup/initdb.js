@@ -1,11 +1,11 @@
 import { exec } from 'child_process';
 import { getLastVersion, getVersionedDumpPath } from './paths';
 import chalk from 'chalk';
-const argv = require("yargs").argv;
+const argv = require('yargs').argv;
 
 const dbname = argv.dbname;
 
-if (!dbname || dbname === "") {
+if (!dbname || dbname === '') {
   console.log(chalk.red(`[dbname] not specified. Usage: yarn initdb --dbname my-database\n`));
   process.exit();
 }
@@ -18,4 +18,4 @@ exec(`psql -f ${VERSIONED_DUMP_PATH} -d ${dbname}`, (err, stdout, stderr) => {
     return;
   }
   console.log(chalk.green(`Database restored from version ${version}`));
-})
+});

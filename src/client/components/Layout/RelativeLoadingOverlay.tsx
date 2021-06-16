@@ -1,8 +1,8 @@
 import React from 'react';
 import { CircularLoadingIndicator } from '@components/Layout/CircularLoadingIndicator';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     overlay: {
       position: 'relative',

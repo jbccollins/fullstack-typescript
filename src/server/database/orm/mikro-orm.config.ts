@@ -1,5 +1,4 @@
 import { User } from '@database/entities/User';
-import { EntityCaseNamingStrategy } from '@mikro-orm/core';
 import { IS_DEV, DB_NAME, DB_PASSWORD, DB_USER, DB_DIALECT } from '@server/config';
 import { MikroORM } from '@mikro-orm/core';
 import path from 'path';

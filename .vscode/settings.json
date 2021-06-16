@@ -1,3 +1,16 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.tabSize": 2,
+    "[typescript]": {
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+    },
+    "[typescriptreact]": {
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "security.workspace.trust.untrustedFiles": "open"
 }
