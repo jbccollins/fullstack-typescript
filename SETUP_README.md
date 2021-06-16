@@ -186,6 +186,7 @@ duplicate the paths there
 - Soft deletion using ORM
 - Investigate server side rendering
 - Add Nodemailer as a feature
+- Add husky/prettier/eslint description of features and scripts to the readme
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
 
