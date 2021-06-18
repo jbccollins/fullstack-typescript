@@ -21,12 +21,9 @@
     "types": ["node", "jest"],
     "jsx": "react",
     "paths": {
-      "@database/*": ["./src/server/database/*"],
-      "@routes/*": ["./src/server/routes/*"],
       "@shared/*": ["./src/shared/*"],
       "@server/*": ["./src/server/*"],
-      "@client/*": ["./src/client/*"],
-      "@clientUtils/*": ["./src/client/utils/*"]
+      "@client/*": ["./src/client/*"]
     }
   }
 }

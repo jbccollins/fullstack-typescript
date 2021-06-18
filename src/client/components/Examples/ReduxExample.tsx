@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, IconButton, makeStyles, Typography } fro
 import AddIcon from '@material-ui/icons/Add';
 import SubtractIcon from '@material-ui/icons/Remove';
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@store/hooks';
+import { useAppSelector, useAppDispatch } from '@client/store/hooks';
 
-import { decrement, increment, selectCounter } from '@store/slices/counterSlice';
+import { decrement, increment, selectCounter } from '@client/store/slices/counterSlice';
 
 const useStyles = makeStyles(() => ({
   CounterValue: {

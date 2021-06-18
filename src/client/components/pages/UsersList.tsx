@@ -1,6 +1,6 @@
 import { useUsersQuery } from '@client/generated/graphql';
 import React from 'react';
-import { RelativeLoadingOverlay } from '@components/Layout/RelativeLoadingOverlay';
+import { RelativeLoadingOverlay } from '@client/components/Layout/RelativeLoadingOverlay';
 import { Grid, Card, CardHeader, CardContent, List, Box } from '@material-ui/core';
 
 export const UsersList: React.FC = () => {

@@ -19,8 +19,6 @@
     "target": "ES2019",
     "types": ["node", "jest"],
     "paths": {
-      "@database/*": ["database/*"],
-      "@routes/*": ["routes/*"],
       "@shared/*": ["../shared/*"],
       "@server/*": ["./*"]
     }

@@ -28,9 +28,6 @@ const config: Configuration = {
     extensions: ['.js', '.ts', '.tsx'],
     alias: {
       '@shared': path.resolve(__dirname, 'src/shared/'),
-      '@components': path.resolve(__dirname, 'src/client/components'),
-      '@store': path.resolve(__dirname, 'src/client/store'),
-      '@clientUtils': path.resolve(__dirname, 'src/client/utils'),
       '@client': path.resolve(__dirname, 'src/client'),
       //"@features": path.resolve(__dirname, 'src/client/features'),
     },

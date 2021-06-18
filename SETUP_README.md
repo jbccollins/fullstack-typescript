@@ -48,7 +48,7 @@ See the troubleshooting section if you have any issues
 
 ### Absolute Paths
 
-This project is configured to allow imports using absolute paths in both the client and the server. Instead of importing `../../../../SomeComponent` we can import `@components/SomComponent`! At the moment Typescript does not support this feature out of the box for many use cases.<sup>[2]</sup> We use (slightly clunky) workarounds for this in both the client and the server but I think it's worth it in the end. You can, of course, continue to use relative imports if you so choose.
+This project is configured to allow imports using absolute paths in both the client and the server. Instead of importing `../../../../SomeComponent` we can import `@client/components/SomComponent`! At the moment Typescript does not support this feature out of the box for many use cases.<sup>[2]</sup> We use (slightly clunky) workarounds for this in both the client and the server but I think it's worth it in the end. You can, of course, continue to use relative imports if you so choose.
 
 #### Client:
 You must add new absolute paths to both the `paths` section in `client/tsconfig.base.json` and the `resolve: alias` section of `webpack.config.ts`
@@ -142,7 +142,7 @@ Leaving these orphaned `.js` files in `dist` can cause issues at runtime. Typesc
 - Constant strings
  - UNDEFINED = 'undefined' (used in resolvers/user.ts)
  - Add a cli script in package.json that will automatically add absolute paths for you for both the server and the client
-    - yarn run create-abs-path --server --client @database database/*
+    - yarn run create-abs-path --server --client @server/database database/*
 - Move graphql stuff to it's own directory
     - Audit the absolute import situation for this stuff
 - Ensure that type-orm and sequelize can create timestampz Date() types for createdAt and updatedAt

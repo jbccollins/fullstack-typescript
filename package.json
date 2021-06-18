@@ -82,9 +82,7 @@
     "moduleNameMapper": {
       "@shared/(.*)": "<rootDir>/src/shared/$1",
       "@client/(.*)": "<rootDir>/src/client/$1",
-      "@server/(.*)": "<rootDir>/src/server/$1",
-      "@database/(.*)": "<rootDir>/src/server/database/$1",
-      "@clientUtils/(.*)": "<rootDir>/src/client/utils/$1"
+      "@server/(.*)": "<rootDir>/src/server/$1"
     },
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -106,12 +104,9 @@
     ]
   },
   "_moduleAliases": {
-    "@database": "dist/server/database",
-    "@routes": "dist/server/routes",
     "@shared": "dist/shared",
     "@server": "dist/server",
-    "@client": "dist/client",
-    "@clientUtils": "dist/clientUtils"
+    "@client": "dist/client"
   },
   "mikro-orm": {
     "useTsNode": true,

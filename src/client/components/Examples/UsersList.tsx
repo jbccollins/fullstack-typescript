@@ -7,7 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import React, { useEffect, useState } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import { IUserPersisted } from '@shared/models/User';
-import { loadUsersAPI } from '@clientUtils/api-facade';
+import { loadUsersAPI } from '@client/utils/api-facade';
 import { User } from './User';
 import { getUserFullName } from '@shared/utils';
 interface IUsersState {

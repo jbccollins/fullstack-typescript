@@ -9,7 +9,7 @@ import {
 import { devtoolsExchange } from '@urql/devtools';
 import { Client, createClient, dedupExchange, fetchExchange } from 'urql';
 import { cacheExchange } from '@urql/exchange-graphcache';
-import { betterUpdateQuery } from '@clientUtils/betterUpdateQuery';
+import { betterUpdateQuery } from '@client/utils/betterUpdateQuery';
 
 export const createUrqlClient = (): Client => {
   return createClient({

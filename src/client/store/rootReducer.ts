@@ -1,7 +1,7 @@
 // import { combineReducers } from '@reduxjs/toolkit'
 
 // // Reducers
-// import counterReducer from '@components/Counter/counterSlice'
+// import counterReducer from '@client/components/Counter/counterSlice'
 
 // const rootReducer = combineReducers({
 //   counter: counterReducer,
@@ -14,7 +14,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 // Reducers
-import counterReducer from '@store/slices/counterSlice';
+import counterReducer from '@client/store/slices/counterSlice';
 
 const rootReducer = combineReducers({
   counter: counterReducer,

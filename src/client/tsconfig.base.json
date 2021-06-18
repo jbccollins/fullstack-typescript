@@ -2,10 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@shared/*": ["../shared/*"],
-      "@client/*": ["./*"],
-      "@components/*": ["./components/*"],
-      "@store/*": ["./store/*"],
-      "@clientUtils/*": ["./utils/*"]
+      "@client/*": ["./*"]
     }
   }
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '@store/rootReducer';
+import { RootState } from '@client/store/rootReducer';
 
 const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * Math.floor(max));

@@ -1,7 +1,7 @@
 import { Entity, Property, Unique } from '@mikro-orm/core';
 import { Field, ObjectType } from 'type-graphql';
-import { PersistentEntity } from '@database/entities/PersistentEntity';
-import { IUserEntity } from '@database/entities/IUserEntity';
+import { PersistentEntity } from '@server/database/entities/PersistentEntity';
+import { IUserEntity } from '@server/database/entities/IUserEntity';
 
 @ObjectType()
 @Entity()

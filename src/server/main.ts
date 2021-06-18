@@ -2,10 +2,10 @@ import 'module-alias/register';
 import 'reflect-metadata'; // Used by type-graphql
 import express from 'express';
 import path from 'path';
-import { apiRouter } from '@routes/api-router';
-import { pagesRouter } from '@routes/pages-router';
-import { staticsRouter } from '@routes/statics-router';
-import { ORM } from '@database/orm/ORM';
+import { apiRouter } from '@server/routes/api-router';
+import { pagesRouter } from '@server/routes/pages-router';
+import { staticsRouter } from '@server/routes/statics-router';
+import { ORM } from '@server/database/orm/ORM';
 import chalk from 'chalk';
 import * as config from '@server/config';
 import { ApolloServer } from 'apollo-server-express';

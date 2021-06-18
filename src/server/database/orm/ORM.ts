@@ -1,6 +1,6 @@
 import { Connection, IDatabaseDriver, MikroORM } from '@mikro-orm/core';
 import chalk from 'chalk';
-import config from '@database/orm/mikro-orm.config';
+import config from '@server/database/orm/mikro-orm.config';
 
 // Singleton
 export class ORM {

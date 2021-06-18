@@ -2,10 +2,10 @@
 A simple CRUD interface for Users that integrates mikroorm, type-grahql, postgresql and typescript.
 */
 import { Arg, Ctx, Field, InputType, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from 'type-graphql';
-import { User } from '@database/entities/User';
+import { User } from '@server/database/entities/User';
 import { MyContext } from './types';
-import { IUserEntity } from '@database/entities/IUserEntity';
-import { CustomEntityManager } from '@database/helpers/CustomEntityManager';
+import { IUserEntity } from '@server/database/entities/IUserEntity';
+import { CustomEntityManager } from '@server/database/helpers/CustomEntityManager';
 import { isAuth } from '@server/auth/authChecker';
 import { logger } from '@server/middleware/logger';
 import { SESSION_COOKIE_NAME } from '@server/config';

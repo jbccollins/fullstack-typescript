@@ -1,5 +1,5 @@
 import { EntityName, EntityData, AnyEntity } from '@mikro-orm/core';
-import { ORM } from '@database/orm/ORM';
+import { ORM } from '@server/database/orm/ORM';
 
 export class CustomEntityManager {
   /*

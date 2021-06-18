@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularLoadingIndicator } from '@components/Layout/CircularLoadingIndicator';
+import { CircularLoadingIndicator } from '@client/components/Layout/CircularLoadingIndicator';
 import { makeStyles, createStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>

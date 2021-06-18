@@ -1,4 +1,4 @@
-import { executeQuery } from '@database/queries/common';
+import { executeQuery } from '@server/database/queries/common';
 import getIn from '@shared/utils/getIn';
 import chalk from 'chalk';
 

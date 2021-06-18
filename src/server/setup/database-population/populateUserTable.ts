@@ -1,8 +1,8 @@
-import { IUserEntity } from '@database/entities/IUserEntity';
-import { User } from '@database/entities/User';
-import { CustomEntityManager } from '@database/helpers/CustomEntityManager';
+import { IUserEntity } from '@server/database/entities/IUserEntity';
+import { User } from '@server/database/entities/User';
+import { CustomEntityManager } from '@server/database/helpers/CustomEntityManager';
 import argon2 from 'argon2';
-import { ORM } from '@database/orm/ORM';
+import { ORM } from '@server/database/orm/ORM';
 
 const main = async (): Promise<void> => {
   // Truncate the user table
