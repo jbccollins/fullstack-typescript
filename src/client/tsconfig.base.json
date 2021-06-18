@@ -5,7 +5,7 @@
       "@client/*": ["./*"],
       "@components/*": ["./components/*"],
       "@store/*": ["./store/*"],
-      "@utils/*": ["./utils/*"]
+      "@clientUtils/*": ["./utils/*"]
     }
   }
 }

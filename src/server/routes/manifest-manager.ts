@@ -7,7 +7,7 @@ function getManifestFromWebpack(): Promise<any> {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const request = require('request');
     request.get(`http://localhost:${WEBPACK_PORT}/statics/manifest.json`, {}, (err, data) =>
-      err ? reject(err) : resolve(data.body),
+      err ? reject(err) : resolve(data.body)
     );
   });
 }

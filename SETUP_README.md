@@ -187,6 +187,27 @@ duplicate the paths there
 - Investigate server side rendering
 - Add Nodemailer as a feature
 - Add husky/prettier/eslint description of features and scripts to the readme
+- Audit the various tsconfig and package.json module aliases and such. See what can be extended.
+    - This globals key in the "jest" section of the package.json was causing @server imports to fail in jest
+
+```json
+    "jest": {
+        ...
+        "globals": {
+            "ts-jest": {
+                "tsconfig": "<rootDir>/src/client/tsconfig-for-tests.json"
+            }
+        }
+    }
+```
+- Consider prefixing all module-alias things uniquely. The docs reccomend doing this to avoid conflicts with other packages that use module-alias. And maybe switch to using '$' or a character other than @ to avoid confusion wiht packages that use @. Something like
+```json
+{
+    "$fst/server": "...",
+    "$fst/client": "...",
+    "$fst/shared": "...",
+}
+```
 - ~~Hot reload react components instead of live reloading the whole page~~
 - ~~Add linting for server, client and shared. Enforce common standards, that are opt in of course~~
 
@@ -204,3 +225,4 @@ USEFULL TOOLS
 1. Postico
 2. [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
 3. [urql Devtools](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm?hl=en-US)
+4. Travis https://travis-ci.com/github/jbccollins/fullstack-typescript

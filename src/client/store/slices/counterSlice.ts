@@ -27,7 +27,7 @@ export const incrementByAmountAsync = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 // Types

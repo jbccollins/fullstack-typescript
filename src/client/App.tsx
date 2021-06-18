@@ -15,7 +15,7 @@ import green from '@material-ui/core/colors/green';
 import purple from '@material-ui/core/colors/purple';
 import { createMuiTheme, createStyles, responsiveFontSizes, Theme, ThemeProvider } from '@material-ui/core/styles';
 import store from '@store/store';
-import { createUrqlClient } from '@utils/createUrqlClient';
+import { createUrqlClient } from '@clientUtils/createUrqlClient';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -37,7 +37,7 @@ const theme = responsiveFontSizes(
         main: green[500],
       },
     },
-  }),
+  })
 );
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3),
     },
     toolbar: theme.mixins.toolbar,
-  }),
+  })
 );
 
 const App = () => {

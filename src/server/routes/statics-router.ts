@@ -13,7 +13,7 @@ export function staticsRouter(): Router {
       '/statics',
       createProxyMiddleware({
         target: `http://localhost:${WEBPACK_PORT}/`,
-      }),
+      })
     );
   } else {
     const staticsPath = path.join(process.cwd(), 'dist', 'statics');

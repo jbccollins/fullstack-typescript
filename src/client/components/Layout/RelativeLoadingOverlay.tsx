@@ -19,7 +19,7 @@ const useStyles = makeStyles(() =>
       bottom: '0',
       right: '0',
     },
-  }),
+  })
 );
 export const RelativeLoadingOverlay: React.FC = () => {
   const classes = useStyles();

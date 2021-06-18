@@ -3,3 +3,5 @@ dist
 .idea
 .vscode
 node_modules
+coverage
+.DS_Store

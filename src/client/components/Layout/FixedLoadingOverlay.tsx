@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 'calc(50vh - 20px)',
       marginLeft: 'calc(50vw - 20px)',
     },
-  }),
+  })
 );
 
 export const FixedLoadingOverlay: React.FC = () => {

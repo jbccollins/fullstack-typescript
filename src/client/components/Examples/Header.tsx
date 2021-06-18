@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
     },
-  }),
+  })
 );
 export const Header: React.FunctionComponent = () => {
   const classes = useStyles({});

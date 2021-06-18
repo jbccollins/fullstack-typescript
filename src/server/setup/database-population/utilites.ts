@@ -35,7 +35,7 @@ const _generateTablePopulationSql = (table: string, items: unknown[], transforma
         .map((c) => {
           return sanitize(transformation[c](item));
         })
-        .join("', '")}')`,
+        .join("', '")}')`
   );
   sql = sql + values.join(', ');
   // TODO: This is kinda fragile...

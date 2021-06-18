@@ -10,7 +10,7 @@ export class CustomEntityManager {
     data: EntityData<T>,
     options?: {
       managed?: boolean;
-    },
+    }
   ): Promise<T> {
     /****** Kinda bad hacky stuff *****/
     /*

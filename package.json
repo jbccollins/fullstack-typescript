@@ -32,7 +32,8 @@
     "initdb": "babel-node setup/initdb.js",
     "dumpdb": "babel-node setup/dumpdb.js",
     "force-publish": "heroku pg:reset && heroku pg:push fullstack-typescript DATABASE_URL --app fullstack-typescript-web; git push heroku master",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "coverage": "npm test -- --coverage --watchAll=false"
   },
   "keywords": [
     "typescript",
@@ -51,11 +52,39 @@
   "license": "MIT",
   "author": "James Collins",
   "jest": {
+    "coverageReporters": [
+      "json",
+      "text",
+      "html",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "src/client/components/Examples/*.{ts,tsx}",
+      "!src/**/*/*.d.ts",
+      "!src/**/*/types.ts",
+      "!src/index.tsx",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    },
+    "modulePaths": [
+      "<rootDir>/src"
+    ],
     "roots": [
       "<rootDir>/src"
     ],
     "moduleNameMapper": {
-      "@shared/(.*)": "<rootDir>/src/shared/$1"
+      "@shared/(.*)": "<rootDir>/src/shared/$1",
+      "@client/(.*)": "<rootDir>/src/client/$1",
+      "@server/(.*)": "<rootDir>/src/server/$1",
+      "@database/(.*)": "<rootDir>/src/server/database/$1",
+      "@clientUtils/(.*)": "<rootDir>/src/client/utils/$1"
     },
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -74,18 +103,15 @@
       "jsx",
       "json",
       "node"
-    ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "<rootDir>/src/client/tsconfig-for-tests.json"
-      }
-    }
+    ]
   },
   "_moduleAliases": {
     "@database": "dist/server/database",
     "@routes": "dist/server/routes",
     "@shared": "dist/shared",
-    "@server": "dist/server"
+    "@server": "dist/server",
+    "@client": "dist/client",
+    "@clientUtils": "dist/clientUtils"
   },
   "mikro-orm": {
     "useTsNode": true,
@@ -170,7 +196,7 @@
     "@types/validator": "^13.1.3",
     "@types/webpack": "^4.41.26",
     "@types/webpack-bundle-analyzer": "^3.9.0",
-    "@types/webpack-dev-server": "^3.11.1",
+    "@types/webpack-dev-server": "^3.11.4",
     "@types/webpack-env": "^1.16.0",
     "@types/webpack-manifest-plugin": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^4.14.1",

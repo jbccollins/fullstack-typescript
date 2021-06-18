@@ -43,7 +43,7 @@ const main = async (): Promise<void> => {
       cors({
         origin: 'http://localhost:3000',
         credentials: true,
-      }),
+      })
     );
 
     const RedisStore = connectRedis(session);
@@ -65,7 +65,7 @@ const main = async (): Promise<void> => {
         saveUninitialized: false,
         secret: process.env.REDIS_SECRET,
         resave: false,
-      }),
+      })
     );
 
     const apolloServer = new ApolloServer({

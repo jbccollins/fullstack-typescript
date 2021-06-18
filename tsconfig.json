@@ -1,14 +1,32 @@
 {
-  "description": "This file only exists to satisfy the mikro-orm cli which requires a tsconfig.json and package.json to exist in the same directory unfortunately ",
-  "extends": "./src/server/tsconfig.json",
+  "description": "This file exists to satisfy the mikro-orm cli which requires a tsconfig.json and package.json to exist in the same directory. Additionally it is used by jest.",
   "compilerOptions": {
     "baseUrl": ".",
+    "composite": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "incremental": true,
+    "lib": ["ES2019"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../dist/server",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "ES2019",
+    "types": ["node", "jest"],
+    "jsx": "react",
     "paths": {
       "@database/*": ["./src/server/database/*"],
       "@routes/*": ["./src/server/routes/*"],
       "@shared/*": ["./src/shared/*"],
       "@server/*": ["./src/server/*"],
-      "@client/*": ["./src/client/*"]
+      "@client/*": ["./src/client/*"],
+      "@clientUtils/*": ["./src/client/utils/*"]
     }
   }
 }

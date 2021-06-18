@@ -11,7 +11,7 @@ const useStyles = makeStyles(() =>
     loadingIndicator: {
       display: 'inline-block',
     },
-  }),
+  })
 );
 
 export const CircularLoadingIndicator: React.FC<ICircularLoadingIndicatorProps> = ({

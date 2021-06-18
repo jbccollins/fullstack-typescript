@@ -9,7 +9,7 @@ import {
 import { devtoolsExchange } from '@urql/devtools';
 import { Client, createClient, dedupExchange, fetchExchange } from 'urql';
 import { cacheExchange } from '@urql/exchange-graphcache';
-import { betterUpdateQuery } from '@utils/betterUpdateQuery';
+import { betterUpdateQuery } from '@clientUtils/betterUpdateQuery';
 
 export const createUrqlClient = (): Client => {
   return createClient({
@@ -65,7 +65,7 @@ export const createUrqlClient = (): Client => {
                       me: result.changePassword.user,
                     };
                   }
-                },
+                }
               );
             },
           },

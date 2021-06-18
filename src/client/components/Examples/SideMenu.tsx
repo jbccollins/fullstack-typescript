@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     toolbar: theme.mixins.toolbar,
-  }),
+  })
 );
 
 export const SideMenu: React.FunctionComponent = () => {

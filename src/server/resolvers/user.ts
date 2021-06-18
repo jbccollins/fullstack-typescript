@@ -54,7 +54,7 @@ export class UserResolver {
     @Arg('token') token: string,
     @Arg('password') password: string,
     @Arg('confirmPassword') confirmPassword: string,
-    @Ctx() { redis, orm, req }: MyContext,
+    @Ctx() { redis, orm, req }: MyContext
   ): Promise<UserResponse> {
     const errors: FieldError[] = [];
     if (confirmPassword != password) {
@@ -186,7 +186,7 @@ export class UserResolver {
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
     @Arg('confirmPassword', () => String) confirmPassword: string,
-    @Ctx() { req }: MyContext,
+    @Ctx() { req }: MyContext
   ): Promise<UserResponse> {
     const errors: FieldError[] = [];
     if (confirmPassword != password) {
@@ -287,7 +287,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async loginUser(
     @Arg('options', () => EmailPasswordInput) options: EmailPasswordInput,
-    @Ctx() { orm, req }: MyContext,
+    @Ctx() { orm, req }: MyContext
   ): Promise<UserResponse> {
     const user = await orm.em.findOne(User, { email: options.email });
     if (!user) {
@@ -329,7 +329,7 @@ export class UserResolver {
         // TODO: Pull the 'qid' variable out into a constants file
         res.clearCookie(SESSION_COOKIE_NAME);
         resolve(true);
-      }),
+      })
     );
 
     return true;
@@ -353,7 +353,7 @@ export class UserResolver {
     @Arg('lastName', () => String, { nullable: true }) lastName: string,
     @Arg('email', () => String, { nullable: true }) email: string,
     @Arg('pwdHash', () => String, { nullable: true }) pwdHash: string,
-    @Ctx() ctx: MyContext,
+    @Ctx() ctx: MyContext
   ): Promise<User | null> {
     const user: User = await ctx.orm.em.findOne(User, { id: id });
     if (user === null) {

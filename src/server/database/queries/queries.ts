@@ -5,7 +5,7 @@ const registerUser = async (
   firstName: string,
   lastName: string,
   email: string,
-  plaintextPassword: string,
+  plaintextPassword: string
 ): Promise<any> => {
   const hashedPassword = await hashPassword(plaintextPassword);
 
