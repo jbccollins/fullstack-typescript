@@ -3,7 +3,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useLogoutMutation, useMeQuery } from '@client/generated/graphql';
-import { Link as RouterLink } from 'react-router-dom';
+import ReactRouterLink from '@client/components/aliases/RouterLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,11 +67,11 @@ export const Header: React.FunctionComponent = () => {
         </Typography>
         {!auth && (
           <>
-            <Link color='inherit' component={RouterLink} to='/login'>
+            <Link color='inherit' component={ReactRouterLink} to='/login'>
               Log in
             </Link>
             <span className={classes.spacer}>|</span>
-            <Link color='inherit' component={RouterLink} to='/register'>
+            <Link color='inherit' component={ReactRouterLink} to='/register'>
               Register
             </Link>
           </>

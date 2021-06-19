@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -15,6 +16,7 @@ import { toErrorMap } from '@client/utils/toErrorMap';
 import ValidationService from '@shared/validation/ValidationService';
 import PasswordIcon from '@material-ui/icons/VpnKey';
 import Alert from '@material-ui/lab/Alert';
+import ReactRouterLink from '@client/components/aliases/RouterLink';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   success: {
     marginTop: theme.spacing(3),
+    //textAlign: 'center',
   },
   tokenError: {
     marginTop: theme.spacing(2),
@@ -81,12 +84,6 @@ export const ChangePassword: React.FC = () => {
         setErrors(toErrorMap(response.data.changePassword.errors));
         const tokenErrors = response.data.changePassword.errors.filter((e) => e.field === 'token');
         setTokenErrors(tokenErrors);
-        console.log(tokenErrors);
-        /*
-          tokenErrors.forEach(e => {
-            alert(e.message);
-          })
-        */
       } else if (response.data?.changePassword.user) {
         setPasswordChanged(true);
       }
@@ -115,7 +112,9 @@ export const ChangePassword: React.FC = () => {
         <Avatar className={classes.avatar}>
           <PasswordIcon />
         </Avatar>
-        {changePasswordFormik.isSubmitting && <CircularProgress size={50} className={classes.loadingSpinner} />}
+        {(changePasswordFormik.isSubmitting || sendChangePasswordEmailFormik.isSubmitting) && (
+          <CircularProgress size={50} className={classes.loadingSpinner} />
+        )}
         <Typography component='h1' variant='h5'>
           Change Password
         </Typography>
@@ -131,7 +130,7 @@ export const ChangePassword: React.FC = () => {
           </Grid>
         )}
         {!token && changePasswordEmailSent && (
-          <Typography className={classes.success} component='h1' variant='h6'>
+          <Typography className={classes.success} component='h1' variant='h6' align='center'>
             An email containing a link to change your password has been sent.
           </Typography>
         )}
@@ -163,9 +162,18 @@ export const ChangePassword: React.FC = () => {
           </form>
         )}
         {token && passwordChanged && (
-          <Typography className={classes.success} component='h1' variant='h6'>
-            Your password has been changed.
-          </Typography>
+          <>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography className={classes.success} component='h6' variant='h6' align='center'>
+                  Your password has been changed.
+                </Typography>
+              </Grid>
+            </Grid>
+            <Button component={ReactRouterLink} to='/' variant='contained' color='primary' className={classes.submit}>
+              Go Home
+            </Button>
+          </>
         )}
         {token && !passwordChanged && (
           <form className={classes.form} onSubmit={changePasswordFormik.handleSubmit}>
@@ -210,6 +218,13 @@ export const ChangePassword: React.FC = () => {
             <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
               Change Password
             </Button>
+            <Grid container justify='flex-end'>
+              <Grid item>
+                <Link component={ReactRouterLink} to='/change-password'>
+                  Resend Change Password Email
+                </Link>
+              </Grid>
+            </Grid>
           </form>
         )}
       </div>

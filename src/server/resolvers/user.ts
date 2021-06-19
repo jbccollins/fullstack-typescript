@@ -113,7 +113,7 @@ export class UserResolver {
     user.pwdHash = await hashPassword(password);
     orm.em.persistAndFlush(user);
     // Ensure that the token is only good for a single password change
-    redis.del(key);
+    await redis.del(key);
     await sendEmail(user.email, formatEmailTemplate({}, changePasswordSuccess));
 
     // log in the user after they reset their password

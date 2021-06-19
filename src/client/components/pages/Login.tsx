@@ -13,7 +13,8 @@ import { useFormik } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import { useLoginMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import ReactRouterLink from '@client/components/aliases/RouterLink';
 import ValidationService from '@shared/validation/ValidationService';
 
 const useStyles = makeStyles((theme) => ({
@@ -121,14 +122,14 @@ const Login: React.FC = () => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link component={RouterLink} to='/register'>
+              <Link component={ReactRouterLink} to='/register'>
                 Don&apos;t have an account? Register
               </Link>
             </Grid>
           </Grid>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link component={RouterLink} to='/change-password'>
+              <Link component={ReactRouterLink} to='/change-password'>
                 Forgot password?
               </Link>
             </Grid>
