@@ -9,7 +9,7 @@ import { NavLink, Route } from 'react-router-dom';
 import { IUserPersisted } from '@shared/models/User';
 import { loadUsersAPI } from '@client/utils/api-facade';
 import { User } from './User';
-import { getUserFullName } from '@shared/utils';
+import { getUserFullName } from '@shared/utils/getUserFullName';
 interface IUsersState {
   users: IUserPersisted[];
   isLoading: boolean;

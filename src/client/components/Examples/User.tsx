@@ -3,7 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { getUserFullName } from '@shared/utils';
+import { getUserFullName } from '@shared/utils/getUserFullName';
 import { IUserPersisted } from '@shared/models/User';
 
 interface IProps {
