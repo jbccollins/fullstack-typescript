@@ -17,9 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - run: echo "Job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "Job is now running on a ${{ runner.os }} server hosted by GitHub."
-      - run: echo "The name of the branch is ${{ github.ref }} and the repository is ${{ github.repository }}."
       - name: Check out repository code
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.NODE_VERSION }}
@@ -33,4 +30,3 @@ jobs:
           npm run build --if-present
           npm run test --if-present
           npm run lint --if-present
-      - run: echo "Job status - ${{ job.status }}"
