@@ -1,4 +1,5 @@
 name: Build, Test, and Lint
+
 on:
   push:
     branches:
@@ -17,6 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: test-environment
     steps:
+    
+      - name: Notify slack starting
+        if: success()
+        id: slack # IMPORTANT: reference this step ID value in future Slack steps
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: github-actions
+          status: STARTING
+          color: warning
+          
       - run: echo "Job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "Job is now running on a ${{ runner.os }} server hosted by GitHub."
       - name: Check out repository code
@@ -34,3 +47,27 @@ jobs:
       - name: Lint
         run: npm run lint --if-present
       - run: echo "Job status - ${{ job.status }}"
+      
+      - name: Notify slack success
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          # Updates existing message from the first step
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: github-actions
+          status: SUCCESS
+          color: good
+          
+      - name: Notify slack failure
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          # Updates existing message from the first step
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: github-actions
+          status: FAILED
+          color: danger
