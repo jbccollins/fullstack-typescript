@@ -1,5 +1,5 @@
 import 'module-alias/register';
-import 'reflect-metadata'; // Used by type-graphql
+import 'reflect-metadata'; // Used by type-graphql and typeorm
 import express from 'express';
 import path from 'path';
 import { apiRouter } from '@server/routes/api-router';
@@ -26,10 +26,10 @@ const main = async (): Promise<void> => {
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`config: ${JSON.stringify(config, null, 2)}`);
     console.log(`*******************************************`);
-    //sendEmail('jbccollins@gmail.com', 'hello');
-    const orm = await ORM.getInstance();
+    //const orm = await ORM.getInstance();
+    await ORM.getInstance();
     // Automatically run migrations:
-    orm.getMigrator().up();
+    //orm.getMigrator().up();
 
     const app = express();
     app.set('view engine', 'ejs');
@@ -74,7 +74,7 @@ const main = async (): Promise<void> => {
         validate: false, //TODO: Should this be false?
         authChecker,
       }),
-      context: ({ req, res }): MyContext => ({ orm, req, res, redis }),
+      context: ({ req, res }): MyContext => ({ req, res, redis }),
     });
 
     // Create graphql endpoint http://localhost:3000/graphql

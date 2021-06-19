@@ -1,11 +1,7 @@
-/*
-A simple CRUD interface for Users that integrates mikroorm, type-grahql, postgresql and typescript.
-*/
 import { Arg, Ctx, Field, InputType, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { User } from '@server/database/entities/User';
 import { MyContext } from './types';
 import { IUserEntity } from '@server/database/entities/IUserEntity';
-import { CustomEntityManager } from '@server/database/helpers/CustomEntityManager';
 import { isAuth } from '@server/auth/authChecker';
 import { logger } from '@server/middleware/logger';
 import { SESSION_COOKIE_NAME } from '@server/config';
@@ -54,7 +50,7 @@ export class UserResolver {
     @Arg('token') token: string,
     @Arg('password') password: string,
     @Arg('confirmPassword') confirmPassword: string,
-    @Ctx() { redis, orm, req }: MyContext
+    @Ctx() { redis, req }: MyContext
   ): Promise<UserResponse> {
     const errors: FieldError[] = [];
     if (confirmPassword != password) {
@@ -98,7 +94,7 @@ export class UserResolver {
       };
     }
 
-    const user = await orm.em.findOne(User, { id: parseInt(userId) });
+    const user = await User.findOne(parseInt(userId));
     if (!user) {
       return {
         errors: [
@@ -111,7 +107,7 @@ export class UserResolver {
     }
 
     user.pwdHash = await hashPassword(password);
-    orm.em.persistAndFlush(user);
+    await user.save();
     // Ensure that the token is only good for a single password change
     await redis.del(key);
     await sendEmail(user.email, formatEmailTemplate({}, changePasswordSuccess));
@@ -123,12 +119,12 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  async me(@Ctx() { orm, req }: MyContext): Promise<User> {
+  async me(@Ctx() { req }: MyContext): Promise<User> {
     // you are not logged in
     if (!req.session.userId) {
       return null;
     }
-    return await orm.em.findOne(User, { id: req.session.userId });
+    return await User.findOne({ id: req.session.userId });
   }
 
   // Example Query:
@@ -138,13 +134,13 @@ export class UserResolver {
   //   lastName,
   // }
   @Query(() => [User])
-  async users(@Ctx() ctx: MyContext): Promise<User[]> {
-    return ctx.orm.em.find(User, {});
+  async users(): Promise<User[]> {
+    return User.find();
   }
 
   @Mutation(() => UserResponse)
-  async forgotPassword(@Arg('email') email: string, @Ctx() { orm, redis }: MyContext): Promise<UserResponse> {
-    const user = await orm.em.findOne(User, { email });
+  async forgotPassword(@Arg('email') email: string, @Ctx() { redis }: MyContext): Promise<UserResponse> {
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       return nonExistantUserError;
     }
@@ -161,10 +157,10 @@ export class UserResolver {
   //   lastName,
   // }
   @Query(() => User, { nullable: true })
-  user(@Arg('id', () => Int) id: number, @Ctx() ctx: MyContext): Promise<User | null> {
-    //return User.findOne({ where: { id: id } });
-    return ctx.orm.em.findOne(User, { id: id });
+  user(@Arg('id') id: number): Promise<User | undefined> {
+    return User.findOne(id);
   }
+
   /*
     Example Query:
     mutation {
@@ -231,22 +227,23 @@ export class UserResolver {
     };
     let user: User = null;
     try {
-      // Alternate way to create a user using the query builder
-      /*
-      const result = await (orm.em as EntityManager).createQueryBuilder(User).getKnexQuery().insert({
-        firstName,
-        lastName,
-        email,
-        pwdHash,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }).returning("*");
-      user = result[0];
-      */
-      // TODO: Do this try catch check with native sql with ON CONFLICT and RETURNING id
-      user = await CustomEntityManager.createAndSave(User, userEntity);
+      // const result = (await ORM.getInstance())
+      //   .createQueryBuilder()
+      //   .insert()
+      //   .into(User)
+      //   .values(userEntity)
+      //   //.onConflict('email')
+      //   .returning('*')
+      //   .execute();
+      // TODO: Consider doing this with a try catch check using native sql with ON CONFLICT and RETURNING id
+      // TODO: Check that the unique constraint stuff here still works
+      user = await User.create(userEntity).save();
     } catch (e) {
-      if (e.name === 'UniqueConstraintViolationException') {
+      console.error('>>>>>>>>>>>>>>> ERRORRRR');
+      console.error(e);
+      // https://www.postgresql.org/docs/9.2/errcodes-appendix.html
+      // unique constraint violation code
+      if (e.code === '23505') {
         errors.push({
           field: 'email',
           message: 'A user with this email already exists.',
@@ -287,9 +284,9 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async loginUser(
     @Arg('options', () => EmailPasswordInput) options: EmailPasswordInput,
-    @Ctx() { orm, req }: MyContext
+    @Ctx() { req }: MyContext
   ): Promise<UserResponse> {
-    const user = await orm.em.findOne(User, { email: options.email });
+    const user = await User.findOne({ where: { email: options.email } });
     if (!user) {
       return nonExistantUserError;
     }
@@ -353,9 +350,9 @@ export class UserResolver {
     @Arg('lastName', () => String, { nullable: true }) lastName: string,
     @Arg('email', () => String, { nullable: true }) email: string,
     @Arg('pwdHash', () => String, { nullable: true }) pwdHash: string,
-    @Ctx() ctx: MyContext
+    @Ctx() {}: MyContext
   ): Promise<User | null> {
-    const user: User = await ctx.orm.em.findOne(User, { id: id });
+    const user = await User.findOne(id);
     if (user === null) {
       // TODO: Log this exception in a sensible way and update the return type(s)
       // reflect that this exception can be gracefully caught. Something like <User | null>
@@ -374,7 +371,7 @@ export class UserResolver {
     if (typeof pwdHash !== 'undefined') {
       user.pwdHash = pwdHash;
     }
-    await ctx.orm.em.persistAndFlush(user);
+    await user.save();
     return user;
   }
 
@@ -386,15 +383,15 @@ export class UserResolver {
   // }
   @UseMiddleware(logger)
   @Mutation(() => Boolean)
-  async deleteUser(@Arg('id', () => Int) id: number, @Ctx() ctx: MyContext): Promise<boolean> {
-    const user: User = await ctx.orm.em.findOne(User, { id: id });
+  async deleteUser(@Arg('id', () => Int) id: number): Promise<boolean> {
+    const user = await User.findOne(id);
     if (user === null) {
       // TODO: Log this exception in a sensible way and update the return type(s)
       // reflect that this exception can be gracefully caught. Something like <Boolean | null>
       console.error(`User with ID ${id} does not exist.`);
       return false;
     }
-    ctx.orm.em.removeAndFlush(user);
+    await user.remove();
     return true;
   }
 }

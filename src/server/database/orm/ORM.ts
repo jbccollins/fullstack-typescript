@@ -1,10 +1,10 @@
-import { Connection, IDatabaseDriver, MikroORM } from '@mikro-orm/core';
 import chalk from 'chalk';
-import config from '@server/database/orm/mikro-orm.config';
+import config from '@server/database/orm/ormconfig';
+import { createConnection, Connection } from 'typeorm';
 
 // Singleton
 export class ORM {
-  private static instance: MikroORM<IDatabaseDriver<Connection>> = null;
+  private static instance: Connection = null;
 
   // Private constructor ensures a singleton class
   private constructor() {}
@@ -14,7 +14,7 @@ export class ORM {
       return;
     }
     try {
-      const orm = await MikroORM.init(config);
+      const orm = await createConnection(config);
       this.instance = orm;
       return;
     } catch (error) {
@@ -23,7 +23,7 @@ export class ORM {
     }
   }
 
-  static async getInstance(): Promise<MikroORM<IDatabaseDriver<Connection>>> {
+  static async getInstance(): Promise<Connection> {
     if (!this.instance) {
       await this.initialize();
     }
@@ -31,24 +31,3 @@ export class ORM {
     return this.instance;
   }
 }
-
-// export const initDBMikro = async (): Promise<MikroORM<IDatabaseDriver<Connection>>> => {
-//   try {
-//     const orm = await MikroORM.init({
-//       // ../../../dist/server/database/entities
-//       entities: [User], // path to your JS entities (dist), relative to `baseDir`
-//       dbName: 'jamescollins',
-//       user: 'jamescollins',
-//       password: '',
-//       type: 'postgresql',
-//       debug: IS_DEV,
-//       // Keep the case of things as they are defined in ts land
-//       namingStrategy: EntityCaseNamingStrategy,
-//     });
-
-//     return orm;
-//   } catch (error) {
-//     // TODO: Check that this chalk logging works
-//     console.error(chalk.red('>>>>> Unable to connect to the database: <<<<<', error));
-//   }
-// }

@@ -86,7 +86,7 @@ export type Query = {
 
 
 export type QueryUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars['Float'];
 };
 
 export type User = {

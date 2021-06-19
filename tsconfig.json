@@ -1,5 +1,5 @@
 {
-  "description": "This file exists to satisfy the mikro-orm cli which requires a tsconfig.json and package.json to exist in the same directory. Additionally it is used by jest.",
+  "description": "This file is used by jest. And maybe TypeORM cli?",
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
