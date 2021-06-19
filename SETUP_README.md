@@ -187,6 +187,7 @@ duplicate the paths there
 - Investigate server side rendering
 - Add Nodemailer as a feature
 - Add husky/prettier/eslint description of features and scripts to the readme
+- Add description of github actions and slackbot integration
 - Audit the various tsconfig and package.json module aliases and such. See what can be extended.
     - This globals key in the "jest" section of the package.json was causing @server imports to fail in jest
 
