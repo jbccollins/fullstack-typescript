@@ -22,7 +22,7 @@ jobs:
     
       - name: Notify slack started
         id: slack # IMPORTANT: reference this step ID value in future Slack steps    
-        uses: jbccollins/github-action-slack-notify-build@v1.0
+        uses: jbccollins/github-action-slack-notify-build@v1.1
         with:
           channel: github-actions
           status: STARTED
@@ -48,7 +48,7 @@ jobs:
       
       - name: Notify slack success
         if: success()
-        uses: jbccollins/github-action-slack-notify-build@v1.0
+        uses: jbccollins/github-action-slack-notify-build@v1.1
         with:
           # Updates existing message from the first step
           message_id: ${{ steps.slack.outputs.message_id }}
@@ -58,7 +58,7 @@ jobs:
           
       - name: Notify slack failure
         if: failure()
-        uses: jbccollins/github-action-slack-notify-build@v1.0
+        uses: jbccollins/github-action-slack-notify-build@v1.1
         with:
           # Updates existing message from the first step
           message_id: ${{ steps.slack.outputs.message_id }}
