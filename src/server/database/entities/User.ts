@@ -1,7 +1,8 @@
 import { Field, ObjectType } from 'type-graphql';
 import { PersistentEntity } from '@server/database/entities/PersistentEntity';
 import { IUserEntity } from '@server/database/entities/IUserEntity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Post } from '@server/database/entities/Post';
 
 @ObjectType()
 @Entity()
@@ -21,6 +22,9 @@ export class User extends PersistentEntity implements IUserEntity {
   @Field(() => String)
   @Column({ nullable: true })
   username: string;
+
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
 
   // Hide the pwdHash from graphql queries by omitting the @Field decorator
   @Column({ nullable: false })

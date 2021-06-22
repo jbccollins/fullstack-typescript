@@ -4,7 +4,7 @@ import argon2 from 'argon2';
 
 const main = async (): Promise<void> => {
   // Truncate the user table
-  await User.clear();
+  await User.delete({});
 
   // Insert a user
   const firstName = 'James',

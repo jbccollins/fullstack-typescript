@@ -101,6 +101,12 @@ export const SideMenu: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='GraphQL' />
         </ListItem>
+        <ListItem button component={NavLinkMui} to='/create-post'>
+          <ListItemIcon>
+            <GraphqlIcon />
+          </ListItemIcon>
+          <ListItemText primary='Create Post' />
+        </ListItem>
         <Divider />
         <List>
           <ListItem button component={NavLinkMui} to='/register'>

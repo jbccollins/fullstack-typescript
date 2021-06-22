@@ -4,6 +4,8 @@ const minPasswordError = ' must be at least 8 characters long';
 export default class ValidationService {
   private firstName = yup.string().required('First Name is required');
   private lastName = yup.string().required('Last Name is required');
+  private postTitle = yup.string().required('Post Title is required');
+  private postText = yup.string().required('Post Text is required');
   private email = yup.string().email('Enter a valid email').required('Email Address is required');
   private password = yup.string().required('Password is required');
   private createPassword = yup.string().min(8, `Password ${minPasswordError}`).required('Password is required');
@@ -33,5 +35,10 @@ export default class ValidationService {
 
   public readonly sendResetEmailSchema = yup.object({
     email: this.email,
+  });
+
+  public readonly submitPostSchema = yup.object({
+    title: this.postTitle,
+    text: this.postText,
   });
 }

@@ -28,7 +28,7 @@
     "typeorm": "ts-node --files -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config ./src/server/database/orm/ormconfig.ts",
     "db:migrate": "npm run typeorm migration:run",
     "db:create-migration": "npm run typeorm migration:create -- -n",
-    "db:populate": "node dist/server/setup/database-population/index.js",
+    "db:seed": "node dist/server/setup/database-seed/index.js",
     "gen": "graphql-codegen --config codegen.yml",
     "initdb": "babel-node setup/initdb.js",
     "dumpdb": "babel-node setup/dumpdb.js",

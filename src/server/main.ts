@@ -19,6 +19,7 @@ import { MyContext } from '@server/resolvers/types';
 import { authChecker } from '@server/auth/authChecker';
 import cors from 'cors';
 import { SESSION_COOKIE_NAME } from '@server/config';
+import { PostResolver } from './resolvers/post';
 
 const main = async (): Promise<void> => {
   try {
@@ -26,8 +27,10 @@ const main = async (): Promise<void> => {
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`config: ${JSON.stringify(config, null, 2)}`);
     console.log(`*******************************************`);
+
     //const orm = await ORM.getInstance();
     await ORM.getInstance();
+
     // Automatically run migrations:
     //orm.getMigrator().up();
 
@@ -70,7 +73,7 @@ const main = async (): Promise<void> => {
 
     const apolloServer = new ApolloServer({
       schema: await buildSchema({
-        resolvers: [HelloResolver, UserResolver],
+        resolvers: [HelloResolver, UserResolver, PostResolver],
         validate: false, //TODO: Should this be false?
         authChecker,
       }),

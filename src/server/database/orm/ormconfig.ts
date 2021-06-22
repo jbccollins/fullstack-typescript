@@ -2,6 +2,7 @@ import { createConnection } from 'typeorm';
 import { DB_NAME, DB_PASSWORD, DB_USER, DB_DIALECT } from '@server/config';
 import { User } from '@server/database/entities/User';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { Post } from '@server/database/entities/Post';
 
 const namingStrategy = new SnakeNamingStrategy();
 export default {
@@ -10,12 +11,12 @@ export default {
   username: DB_USER,
   password: DB_PASSWORD,
   logging: true,
-  entities: [User],
+  entities: [User, Post],
   namingStrategy,
   migrationsTableName: 'migration',
 
   // We are using migrations, synchronize should be set to false.
-  synchronize: false, // create tables automatically
+  synchronize: true, //false, // create tables automatically
 
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.

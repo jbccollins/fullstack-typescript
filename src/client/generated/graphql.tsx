@@ -34,6 +34,7 @@ export type Mutation = {
   logoutUser: Scalars['Boolean'];
   updateUser?: Maybe<User>;
   deleteUser: Scalars['Boolean'];
+  createPost: PostResponse;
 };
 
 
@@ -76,16 +77,50 @@ export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
 };
 
+
+export type MutationCreatePostArgs = {
+  input: PostInput;
+};
+
+export type Post = {
+  __typename?: 'Post';
+  id: Scalars['Int'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  title: Scalars['String'];
+  text: Scalars['String'];
+  points: Scalars['Float'];
+  authorId: Scalars['Float'];
+};
+
+export type PostInput = {
+  title: Scalars['String'];
+  text: Scalars['String'];
+};
+
+export type PostResponse = {
+  __typename?: 'PostResponse';
+  errors?: Maybe<Array<FieldError>>;
+  post?: Maybe<Post>;
+};
+
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   me?: Maybe<User>;
   users: Array<User>;
   user?: Maybe<User>;
+  posts: Array<Post>;
+  post: Post;
 };
 
 
 export type QueryUserArgs = {
+  id: Scalars['Float'];
+};
+
+
+export type QueryPostArgs = {
   id: Scalars['Float'];
 };
 
@@ -140,6 +175,25 @@ export type ChangePasswordMutation = (
   & { changePassword: (
     { __typename?: 'UserResponse' }
     & BaseUserResponseFragment
+  ) }
+);
+
+export type CreatePostMutationVariables = Exact<{
+  input: PostInput;
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { createPost: (
+    { __typename?: 'PostResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & BaseErrorFragment
+    )>>, post?: Maybe<(
+      { __typename?: 'Post' }
+      & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'text' | 'title' | 'points'>
+    )> }
   ) }
 );
 
@@ -255,6 +309,27 @@ export const ChangePasswordDocument = gql`
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
+export const CreatePostDocument = gql`
+    mutation CreatePost($input: PostInput!) {
+  createPost(input: $input) {
+    errors {
+      ...BaseError
+    }
+    post {
+      id
+      createdAt
+      updatedAt
+      text
+      title
+      points
+    }
+  }
+}
+    ${BaseErrorFragmentDoc}`;
+
+export function useCreatePostMutation() {
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 };
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {

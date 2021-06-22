@@ -23,6 +23,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
 import { Provider as UrqlProvider } from 'urql';
 import { Login } from './components/pages/Login';
 import { ChangePassword } from './components/pages/ChangePassword';
+import { CreatePost } from './components/pages/CreatePost';
 
 const client = createUrqlClient();
 
@@ -73,6 +74,7 @@ const App = () => {
             <Route path='/router-example/:slug' component={RouterExample} />
             <Route path='/redux-example' component={ReduxExample} />
             <Route path='/graphql-example' component={GraphQLExample} />
+            <Route path='/create-post' component={CreatePost} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
             <Route path='/users' component={UsersListPage} />

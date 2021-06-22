@@ -14,6 +14,7 @@ import sendEmail, {
 } from '@server/utils/sendEmail';
 import { v4 as uuid } from 'uuid';
 import { FORGOT_PASSWORD_PREFIX } from '@server/constants/redis';
+import { FieldError } from './fieldError';
 
 @InputType()
 class EmailPasswordInput {
@@ -21,14 +22,6 @@ class EmailPasswordInput {
   email: string;
   @Field()
   password: string;
-}
-
-@ObjectType()
-class FieldError {
-  @Field()
-  field: string;
-  @Field()
-  message: string;
 }
 
 @ObjectType()
@@ -328,8 +321,6 @@ export class UserResolver {
         resolve(true);
       })
     );
-
-    return true;
   }
 
   //Example Query
