@@ -1,10 +1,10 @@
 {
   "name": "fullstack-typescript",
   "version": "1.1.1",
-  "description": "test",
+  "description": "A fullstack typescript starter kit",
   "main": "index.js",
   "engines": {
-    "node": "12.16.1"
+    "node": "16.4.0"
   },
   "scripts": {
     "test": "jest",

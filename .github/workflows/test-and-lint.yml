@@ -11,7 +11,7 @@ on:
       - master
 
 env:
-  NODE_VERSION: '12.16.1'
+  NODE_VERSION: '16.4.0'
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
 jobs:

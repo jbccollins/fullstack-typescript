@@ -22,7 +22,18 @@ You will then need to run
 ```bash
 brew services start postgresql
 ```
- once the installation is finished.
+once the installation is finished.
+
+Next, create a postgres database with your default macusername (or whatever name it doesn't really matter)
+```bash
+createdb macusername
+```
+
+Now create a .env file. Copy over the contents of .env-example and edit them as needed
+Make sure your `DB_NAME` and `DB_USER` match your macusername (or whatever name you picked for when running `createdb`)
+
+
+If you want to popluate your DB with some default data you can run `npm run build && npm run db:seed`
 
 See the troubleshooting section if you have any issues
 
@@ -188,6 +199,8 @@ duplicate the paths there
 - Add Nodemailer as a feature
 - Add husky/prettier/eslint description of features and scripts to the readme
 - Add description of github actions and slackbot integration
+- Add a setup bash script
+    - Use a Brewfilefor brew installations
 - Audit the various tsconfig and package.json module aliases and such. See what can be extended.
     - This globals key in the "jest" section of the package.json was causing @server imports to fail in jest
 
@@ -215,7 +228,7 @@ duplicate the paths there
 VIDEO
 - SSR Stuff starts around 4:00. Talks about how to handle stuff like urql.
 DEBUGGING STEPS
-1. Is node installed and is it the correct version? Check nvm. `nvm list` and `nvm use 12.16.1`
+1. Is node installed and is it the correct version? Check nvm. `nvm list` and `nvm use 16.4.0`
 2. Is redis installed and running? `redis-server /usr/local/etc/redis.conf`
 3. Is postgres installed and running? `brew services start postgresql`
  - If your computer crashed postgresql might be in a hung state on restart. Stop postgres and follow the steps [here](https://superuser.com/questions/553045/fatal-lock-file-postmaster-pid-already-exists) to correctly kill the hung process and then run the start command again.
