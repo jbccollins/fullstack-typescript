@@ -19,11 +19,13 @@ import { createUrqlClient } from '@client/utils/createUrqlClient';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider as ReduxProvider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
+import { Router, Route, Switch } from 'react-router-dom';
 import { Provider as UrqlProvider } from 'urql';
 import { Login } from './components/pages/Login';
 import { ChangePassword } from './components/pages/ChangePassword';
 import { CreatePost } from './components/pages/CreatePost';
+import history from './utils/history';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 const client = createUrqlClient();
 
@@ -58,7 +60,7 @@ const App = () => {
   const classes = useStyles({});
 
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <div className={classes.root}>
         <CssBaseline />
         <Header />
@@ -74,7 +76,7 @@ const App = () => {
             <Route path='/router-example/:slug' component={RouterExample} />
             <Route path='/redux-example' component={ReduxExample} />
             <Route path='/graphql-example' component={GraphQLExample} />
-            <Route path='/create-post' component={CreatePost} />
+            <PrivateRoute path='/create-post' component={CreatePost} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
             <Route path='/users' component={UsersListPage} />
@@ -83,7 +85,7 @@ const App = () => {
           </Switch>
         </main>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 

@@ -7,9 +7,28 @@ import {
   ChangePasswordMutation,
 } from '@client/generated/graphql';
 import { devtoolsExchange } from '@urql/devtools';
-import { Client, createClient, dedupExchange, fetchExchange } from 'urql';
+import { Client, createClient, dedupExchange, /* Exchange, */ fetchExchange } from 'urql';
 import { cacheExchange } from '@urql/exchange-graphcache';
 import { betterUpdateQuery } from '@client/utils/betterUpdateQuery';
+// import { pipe, tap } from 'wonka';
+// import history from '@client/utils/history';
+
+// const errorExchange: Exchange =
+//   ({ forward }) =>
+//   (ops$) => {
+//     return pipe(
+//       forward(ops$),
+//       tap(({ error }) => {
+//         // TODO: Make "Not logged in a shared constant";
+//         // This should only really ever be hit if the user's session times out.
+//         // Most of the time this should be handled by the PrivateRoute component
+//         if (error?.message.includes('Not logged in')) {
+//           history.replace('/login'); // history.push instead maybe?
+//           console.log(error);
+//         }
+//       })
+//     );
+//   };
 
 export const createUrqlClient = (): Client => {
   return createClient({
@@ -71,6 +90,7 @@ export const createUrqlClient = (): Client => {
           },
         },
       }),
+      //errorExchange,
       fetchExchange,
     ],
   });

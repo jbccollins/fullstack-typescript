@@ -34,7 +34,9 @@
     "dumpdb": "babel-node setup/dumpdb.js",
     "force-publish": "heroku pg:reset && heroku pg:push fullstack-typescript DATABASE_URL --app fullstack-typescript-web; git push heroku master",
     "prepare": "husky install",
-    "coverage": "npm test -- --coverage --watchAll=false"
+    "coverage": "npm test -- --coverage --watchAll=false",
+    "start:redis": "redis-server",
+    "start:pg": "brew services start postgresql"
   },
   "keywords": [
     "typescript",

@@ -13,9 +13,10 @@ import { useFormik } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import { useLoginMutation } from '@client/generated/graphql';
 import { toErrorMap } from '@client/utils/toErrorMap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactRouterLink from '@client/components/aliases/RouterLink';
 import ValidationService from '@shared/validation/ValidationService';
+import ILocationState from '@client/utils/ILocationState';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,6 +52,7 @@ const validationSchema = validationService.loginSchema;
 const Login: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { state } = useLocation<ILocationState>();
 
   const [, login] = useLoginMutation();
 
@@ -66,7 +68,11 @@ const Login: React.FC = () => {
         setErrors(toErrorMap(response.data.loginUser.errors));
       } else if (response.data?.loginUser.user) {
         // Go back to home page on success
-        history.push('/');
+        let toPush = '/';
+        if (state?.referred && state?.from.pathname) {
+          toPush = state.from.pathname;
+        }
+        history.push(toPush);
       }
     },
   });
