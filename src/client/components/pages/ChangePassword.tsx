@@ -99,7 +99,7 @@ export const ChangePassword: React.FC = () => {
       const response = await forgotPassord(values);
       if (response.data?.forgotPassword.errors) {
         setErrors(toErrorMap(response.data.forgotPassword.errors));
-      } else if (response.data?.forgotPassword.user) {
+      } else {
         setChangePassswordEmailSent(true);
       }
     },
